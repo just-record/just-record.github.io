@@ -384,6 +384,50 @@ jupyter notebook이 실행되면서 `./src` 디렉토리가 root 디렉토리가
 
 ![jupyter notebook 화면]({{site.url}}/images/python-dev-env/python-dev-env-01_01.png)
 
+## juniper notebook Background 실행
+
+원격으로 접속한 터미널에서 jupyter notebook을 실행하면 터미널이 종료되면 jupyter notebook도 종료됩니다. 이를 방지하기 위해 jupyter notebook을 Background로 실행하겠습니다.
+
+> Background로 실행
+
+```bash
+nohup ./run_jupyter.sh &
+```
+
+```bash
+nohup: ignoring input and appending output to 'nohup.out'
+```
+
+위와 같은 메시지를 출력하면서 Background로 실행합니다. 그냥 엔터를 한번 더 입력 하면 됩니다. 참고로 `nohup.out` 파일에 실행 로그가 저장됩니다.
+
+> Background로 실행된 jupyter notebook 종료
+
+jupyter notebook의 프로세서 ID(PID)를 확인합니다.
+
+```bash
+ps -ef | grep jupyter
+```
+
+```bash
+dev01      80407   60734  0 08:51 pts/0    00:00:00 /bin/sh ./run_jupyter.sh
+dev01      80408   80407  0 08:51 pts/0    00:00:01 /home/dev01/app/devcomn_prj/devcomn/bin/python3 /home/dev01/app/devcomn_prj/devcomn/bin/jupyter-notebook --config=./jupyter_notebook_config.py
+dev01      80487   60734  0 08:54 pts/0    00:00:00 grep --color=auto jupyter
+```
+
+`80408`이 jupyter notebook의 프로세서 ID(PID)입니다. kill과 프로세서 ID(PID)를 이용하여 jupyter notebook을 종료합니다.
+
+```bash
+kill -9 80408
+```
+
+출력이 없으면 성공입니다.
+
+종료 되었는지 확인합니다.
+
+```bash
+ps -ef | grep jupyter
+```
+
 ---
 
-해시태그: #cloud #navercloud #server #ubuntu #서버생성
+해시태그: #python #ubuntu20.04 #개발환경 #jupyter #notebook #가상환경
