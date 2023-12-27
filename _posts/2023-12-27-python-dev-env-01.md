@@ -181,7 +181,7 @@ drwxrwxr-x  2 dev01 dev01 4096 Dec 27 21:55 numpy.libs
 
 조금 전 설치한 numpy 패키지가 있는 것을 확인할 수 있습니다.
 
-> 가상환경 비활성화
+> 가상환경 비활성화(필요 시)
 
 가상환경을 비활성화 하려면 아래의 명령을 실행합니다.
 
@@ -224,11 +224,13 @@ Writing default config to: /home/dev01/.jupyter/jupyter_notebook_config.py
 cp ~/.jupyter/jupyter_notebook_config.py ./
 ```
 
+복사된 `jupyter_notebook_config.py`을 편집합니다.
+
 ```bash
 vi jupyter_notebook_config.py
 ```
 
-```text
+```shell
 c = get_config()
 c.ServerApp.port = 8880
 c.ServerApp.ip = '0.0.0.0'
@@ -354,7 +356,7 @@ To                         Action      From
 8880 (v6)                  ALLOW       Anywhere (v6)
 ```
 
-> 방화벽 비활성화
+> 방화벽 비활성화(필요 시)
 
 ```bash
 sudo ufw disable
