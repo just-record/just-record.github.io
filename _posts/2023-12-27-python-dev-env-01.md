@@ -384,6 +384,10 @@ jupyter notebook이 실행되면서 `./src` 디렉토리가 root 디렉토리가
 
 ![jupyter notebook 화면]({{site.url}}/images/python-dev-env/python-dev-env-01_01.png)
 
+> jupyter notebook 종료
+
+jupyter notebook을 종료하려면 터미널에서 `Ctrl + C`를 누릅니다.
+
 ## juniper notebook Background 실행
 
 원격으로 접속한 터미널에서 jupyter notebook을 실행하면 터미널이 종료되면 jupyter notebook도 종료됩니다. 이를 방지하기 위해 jupyter notebook을 Background로 실행하겠습니다.
