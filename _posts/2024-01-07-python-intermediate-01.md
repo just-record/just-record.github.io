@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Python - 01 (list comprehension)"
+title: "Python - 중급 01 (list comprehension)"
 categories: Python
 tag: [Python, list comprehension]
 toc: true
@@ -148,9 +148,9 @@ print(squares)
 {0, 1, 4, 9, 16, 25}
 ```
 
-## generator comprehension
+## generator expression
 
-generator도 comprehension을 사용할 수 있습니다. generator comprehension은 expression 부분에 value를 가지는 식을 사용합니다. generator는 list와 달리 한 번에 모든 값을 메모리에 저장하지 않고 필요할 때마다 값을 생성합니다.
+generator는 compexpression이라고 합니다. generator는 list와 달리 한 번에 모든 값을 메모리에 저장하지 않고 필요할 때마다 값을 생성합니다.
 
 ```python
 squares = (x*x for x in range(6))
@@ -158,7 +158,8 @@ print(squares)
 print(type(squares))
 ```
 
-generator comprehension은 ()를 사용합니다. **()는 tuple의 기호이지만 comprehension에서는 tuple이 아닌 generator를 생성**합니다. generator는 추후에 포스팅 하겠습니다.
+generator expression ()를 사용합니다. **()는 tuple의 기호이지만 tuple이 아닌 generator를 생성**합니다.  
+geneartor는 [Python - 중급 05 (generator)](/python/python-intermediate-05/)를 참조 하십시오.
 
 ```python
 <generator object <genexpr> at 0x000001B8677E4350>
@@ -167,19 +168,64 @@ generator comprehension은 ()를 사용합니다. **()는 tuple의 기호이지�
 
 ## tuple comprehension은 python에 존재하지 않습니다
 
-tuple comprehension은 python에 존재하지 않습니다. tuple은 immutable(변하지 않는)한 객체이므로 comprehension을 사용할 수 없습니다. comprehension을 사용하고 싶다면 generator comprehension을 사용하고 tuple로 변환하면 됩니다.
+tuple comprehension은 python에 존재하지 않습니다. tuple은 immutable(변하지 않는)한 객체이므로 comprehension을 사용할 수 없습니다. comprehension을 사용하고 싶다면 generator expression 사용하고 tuple로 변환하면 됩니다.
 
 ```python
 squares = tuple(x*x for x in range(6))
 print(squares)
 ```
 
-generator comprehension으로 생성된 값을 tuple로 변환합니다.
+generator expression으로 생성된 값을 tuple로 변환합니다.
 
 ```python
 (0, 1, 4, 9, 16, 25)
 ```
 
+## 연습 문제
+
+- 0부터 20까지의 숫자 중에서 짝수만 포함하는 리스트를 만드세요
+
+```python
+result = [i for i in range(21) if i % 2 == 0]
+print(result)
+```
+
+- 다음 리스트에서 길이가 5 이상인 단어들만 포함하는 새로운 리스트를 만드세요  
+  words = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape"]
+
+```python
+words = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape"]
+result = [i for i in words if len(i) >= 5]
+print(result)
+```
+
+- 다음 리스트의 숫자들을 제곱하여, 결과가 50 이상인 숫자들만 포함하는 리스트를 만드세요  
+  numbers = [5, 7, 10, 12, 15, 18, 20]
+
+```python
+numbers = [5, 7, 10, 12, 15, 18, 20]
+result = [i**2 for i in numbers if i**2 >= 50]
+print(result)
+```
+
+- 아래 딕셔너리에서 값이 200 이상인 항목들의 키만을 포함하는 리스트를 만드세요  
+  prices = {"apple": 150, "banana": 200, "cherry": 250, "date": 300, "elderberry": 180}
+
+```python
+prices = {"apple": 150, "banana": 200, "cherry": 250, "date": 300, "elderberry": 180}
+result = [key for key, value in prices.items() if value >= 200]
+print(result)
+```
+
+- 주어진 문자열에서 모음(a, e, i, o, u)을 제거한 새로운 문자열을 생성하세요  
+  sentence = "List comprehension is really useful!"
+
+```python
+sentence = "List comprehension is really useful!"
+result = ''.join([i for i in sentence if i not in 'aeiou'])
+print(result)
+```
+
 ---
 
-해시태그: #python #list_comprehension #dictionary_comprehension #set_comprehension #generator_comprehensions
+해시태그: #python #list_comprehension #dictionary_comprehension #set_comprehension #generator_expression
