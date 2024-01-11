@@ -9,7 +9,7 @@ toc_label: "목차"
 ---
 ubuntu 20.04에 Python 개발 환경을 설정하겠습니다.
 
-클라우드에서 ubuntu 설치는 [Cloud - 01 (naver - server)]({{site.url}}/cloud-01/)를 참고 하시기 바랍니다.
+클라우드에서 ubuntu 설치는 [Cloud - 01 (naver - server)]({{site.url}}/cloud/cloud-01/)를 참고 하시기 바랍니다.
 
 ## 사용자 계정
 

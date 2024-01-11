@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Python 3.10 설치 (ubuntu 20.04)"
-categories: python
+categories: Python
 tag: [python, ubuntu]
 toc: true
 toc_sticky: true
