@@ -56,51 +56,55 @@ Nginx 또는 Ngrok을 사용하여 **외부에서 접근 가능한 https 서버�
 
 ## 스킬 생성
 
-지난번에 생성한 '인공지능 챗봇'을 선택합니다.
+'[카카오톡의 비즈니스 가이드 - 챗봇 관리자 센터 - 스킬](https://kakaobusiness.gitbook.io/main/tool/chatbot/main_notions/skill)'는 공식 사이트의 링크 입니다. 스킬에 대해 알려줍니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_40.png)
+먼저 지난번에 생성한 '인공지능 챗봇'을 선택합니다.
+
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_01.png)
 
 좌측 메뉴의 [스킬] -> [스킬 목록]을 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_41.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_02.png)
 
 [생성]을 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_42.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_03.png)
 
 스킬 이름, 설명, URL을 입력하고 기본 스킬로 설정합니다. URL은 API 서버 주소(`https://chatbot.mycompany.co.kr/chat`)입니다. [저장]을 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_43.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_04.png)
 
 저장이 완료되면 API 서버와 연동이 잘 되었는지 테스트를 해보겠습니다. 우측 하단의 [스킬서버로 전송]을 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_44.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_05.png)
 
 아래와 같이 응답이 오면 정상적으로 연동이 된 것 입니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_45.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_06.png)
 
 ## 시나리오 생성
 
+'[카카오톡의 비즈니스 가이드 - 챗봇 관리자 센터 - 시나리오](https://kakaobusiness.gitbook.io/main/tool/chatbot/main_notions/scenario)'는 공식 사이트의 링크 입니다. 시나리오에 대해 알려줍니다.
+
 좌측 메뉴의 [시나리오] -> [+시나리오]를 클릭하여 시나리오를 생성합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_46.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_07.png)
 
 [폴백 블록]을 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_47.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_08.png)
 
 우측 상단의 [스킬 검색/선택]에서 조금 전 생성한 '인공지능 챗봇'을 선택합니다. 버전은 자동으로 '1'이 선택됩니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_48.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_09.png)
 
 화면 아래의 [스킬데이터]를 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_49.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_10.png)
 
 [저장]를 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_50.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_11.png)
 
 시나리오 생성이 완료되었습니다.
 
@@ -108,51 +112,51 @@ Nginx 또는 Ngrok을 사용하여 **외부에서 접근 가능한 https 서버�
 
 스킬과 시나리오를 생성하였으니 배포를 해보겠습니다. 좌측 메뉴의 [배포] -> [배포]를 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_51.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_12.png)
 
 확인 창이 뜨면 [배포]을 클릭합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_52.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_13.png)
 
 배포가 완료되었습니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_53.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_14.png)
 
 ## 채널 확인
 
 상단의 [채널] -> [채널]을 클릭하여 채널 관리자로 이동합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_54.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_15.png)
 
 'JBSH 인공지능 챗봇'을 선택합니다. [친구모으기] -> [채널 홍보]를 클릭합니다. [채널 URL]을 복사합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_55.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_16.png)
 
 웹 브라우저의 주소창에 붙여 넣어 접속합니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_56.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_17.png)
 
 우측 상단의 '로봇 모양의 아이콘'을 클릭합니다. 채팅이 시작 됩니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_57.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_18.png)
 
 PC에 카카오톡이 설치되어 있으면 카카오톡으로 연결됩니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_58.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_19.png)
 
 대화창 화면 입니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_59.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_20.png)
 
 '안녕하세요'라고 메시지를 보냈습니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_60.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_21.png)
 
 아직은 아무런 대답이 없습니다.  
 
 API 서버에 접속하여 로그를 확인해 보겠습니다. 로그를 보기 좋게 정렬하였습니다.
 
-![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-01_61.png)
+![챗봇 관리자센터]({{site.url}}/images/kakao-chatbot/kakao-chatbot-02_22.png)
 
 API 서버에 정상적으로 요청이 오고 있습니다. 이제 API 서버에서 요청을 받아 처리하는 부분을 구현해야 겠습니다.
 
