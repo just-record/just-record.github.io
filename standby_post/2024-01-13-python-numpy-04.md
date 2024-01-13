@@ -11,7 +11,7 @@ toc_label: "목차"
 
 ## indexing(인덱싱)
 
-indexing은 특정 원소(단일값)를 가져오는 방법입니다. 파이썬의 list와 비슷합니다.
+indexing은 특정 원소를 가져오는 방법입니다. list의 indexing과 비슷합니다.
 
 ```python
 import numpy as np
@@ -24,7 +24,6 @@ print(arr[5])
 print(arr[-1])
 ```
 
-- `np.arange(10)`: 0부터 9까지의 ndarray를 생성합니다.
 - `arr[0]`: arr의 첫 번째 원소를 가져옵니다.
 - `arr[5]`: arr의 여섯 번째 원소를 가져옵니다. 0부터 시작합니다.
 - `arr[-1]`: arr의 마지막 원소를 가져옵니다.
@@ -38,7 +37,7 @@ print(arr[-1])
 
 ### 2차원의 indexing
 
-2차원 배열을 만들어 보겠습니다.
+2차원은 이해 하기 쉽게 (행, 열)로 설명 드리겠습니다.
 
 ```python
 import numpy as np
@@ -52,7 +51,6 @@ print(arr[1, 0])
 print(arr[1, 1])
 ```
 
-- `np.arange(10).reshape(2, 5)`: 0부터 9까지의 ndarray를 생성하고 2x5로 shape를 변경합니다.
 - `arr[0, 0]`: arr의 첫 번째 행의 첫 번째 원소를 가져옵니다.
 - `arr[0, 1]`: arr의 첫 번째 행의 두 번째 원소를 가져옵니다.
 - `arr[1, 0]`: arr의 두 번째 행의 첫 번째 원소를 가져옵니다.
@@ -69,43 +67,44 @@ print(arr[1, 1])
 
 ### 3차원의 indexing
 
-3차원 배열을 만들어 보겠습니다.
+3차원도 이해 하기 쉽게 (면, 행, 열)로 설명 드리겠습니다.
 
 ```python
 import numpy as np
 
-arr = np.arange(10).reshape(2, 5).reshape(2, 2, 5)
+arr = np.arange(18).reshape(2, 3, 3)
 
 print(arr)
 print(arr[0, 0, 0])
 print(arr[0, 0, 1])
-print(arr[1, 0, 0])
-print(arr[1, 0, 1])
+print(arr[0, 1, 0])
+print(arr[1, 1, 2])
 ```
 
-- `np.arange(10).reshape(2, 5).reshape(2, 2, 5)`: 0부터 9까지의 ndarray를 생성하고 2x5로 shape를 변경한 후 2x2x5로 shape를 변경합니다.
 - `arr[0, 0, 0]`: arr의 첫 번째 면의 첫 번째 행의 첫 번째 원소를 가져옵니다.
 - `arr[0, 0, 1]`: arr의 첫 번째 면의 첫 번째 행의 두 번째 원소를 가져옵니다.
-- `arr[1, 0, 0]`: arr의 두 번째 면의 첫 번째 행의 첫 번째 원소를 가져옵니다.
-- `arr[1, 0, 1]`: arr의 두 번째 면의 첫 번째 행의 두 번째 원소를 가져옵니다.
+- `arr[0, 1, 0]`: arr의 첫 번째 면의 두 번째 행의 첫 번째 원소를 가져옵니다.
+- `arr[1, 1, 2]`: arr의 두 번째 면의 두 번째 행의 세 번째 원소를 가져옵니다.
 
 ```shell
-[[[0 1 2 3 4]
-  [5 6 7 8 9]]
+[[[ 0  1  2]
+  [ 3  4  5]
+  [ 6  7  8]]
 
- [[0 1 2 3 4]
-  [5 6 7 8 9]]]
+ [[ 9 10 11]
+  [12 13 14]
+  [15 16 17]]]
 0
 1
-0
-1
+3
+14
 ```
 
 > indexing을 하면 차원이 하나 줄어듭니다.
 
 ## slicing(슬라이싱)
 
-slicing은 특정 범위(여러 데이터)의 원소를 가져오는 방법입니다. 파이썬의 list와 비슷합니다.
+slicing은 특정 범위의 원소를 가져오는 방법입니다. list의 slicing과 비슷합니다.
 
 ```python
 import numpy as np
@@ -120,7 +119,6 @@ print(arr[3:])
 print(arr[:])
 ```
 
-- `np.arange(10)`: 0부터 9까지의 ndarray를 생성합니다.
 - `arr[0:3]`: arr의 0번째 원소부터 2번째 원소까지 가져옵니다. 마지막 원소는 가져오지 않습니다.
 - `arr[1:3]`: arr의 1번째 원소부터 2번째 원소까지 가져옵니다.
 - `arr[:3]`: arr의 처음부터 2번째 원소까지 가져옵니다. 비워 두면 처음을 의미합니다.
@@ -138,8 +136,6 @@ print(arr[:])
 
 ### 2차원의 slicing
 
-2차원 배열을 만들어 보겠습니다.
-
 ```python
 import numpy as np
 
@@ -154,12 +150,11 @@ print(arr[0:2, 1:3])
 print(arr[:, 1:3])
 ```
 
-- `np.arange(10).reshape(2, 5)`: 0부터 9까지의 ndarray를 생성하고 2x5로 shape를 변경합니다.
 - `arr[0, 1:3]`: arr의 첫 번째 행의 1번째 원소부터 2번째 원소까지 가져옵니다.
 - `arr[0, :3]`: arr의 첫 번째 행의 처음부터 2번째 원소까지 가져옵니다.
 - `arr[1, 3:]`: arr의 두 번째 행의 3번째 원소부터 마지막 원소까지 가져옵니다.
 - `arr[1, :]`: arr의 두 번째 행의 처음부터 마지막 원소까지 가져옵니다.
-- `arr[0:2, 1:3]`: arr의 첫 번째 행부터 1번째 원소부터 2번째 원소까지 가져옵니다.
+- `arr[0:2, 1:3]`: arr의 첫 번째 행부터 1번째 행의 1번째 원소부터 2번째 원소까지 가져옵니다.
 - `arr[:, 1:3]`: arr의 모든 행의 1번째 원소부터 2번째 원소까지 가져옵니다.
 
 ```shell
@@ -177,12 +172,10 @@ print(arr[:, 1:3])
 
 ### 3차원의 slicing
 
-3차원 배열을 만들어 보겠습니다.
-
 ```python
 import numpy as np
 
-arr = np.arange(10).reshape(2, 5).reshape(2, 2, 5)
+arr = np.arange(20).reshape(2, 2, 5)
 
 print(arr)
 print(arr[0, 0, 1:3])
@@ -193,43 +186,39 @@ print(arr[0:2, 1, 1:3])
 print(arr[:, :, 1:3])
 ```
 
-- `np.arange(10).reshape(2, 5).reshape(2, 2, 5)`: 0부터 9까지의 ndarray를 생성하고 2x5로 shape를 변경한 후 2x2x5로 shape를 변경합니다.
 - `arr[0, 0, 1:3]`: arr의 첫 번째 면의 첫 번째 행의 1번째 원소부터 2번째 원소까지 가져옵니다.
 - `arr[0, 1, :3]`: arr의 첫 번째 면의 두 번째 행의 처음부터 2번째 원소까지 가져옵니다.
-- `arr[1, 0:2, 3:]`: arr의 두 번째 면의 첫 번째 행부터 1번째 원소부터 마지막 원소까지 가져옵니다.
+- `arr[1, 0:2, 3:]`: arr의 두 번째 면의 첫 번째 행부터 1번째 행의 3번째 원소부터 마지막 원소까지 가져옵니다.
 - `arr[1, :, :]`: arr의 두 번째 면의 모든 행의 처음부터 마지막 원소까지 가져옵니다.
-- `arr[0:2, 1, 1:3]`: arr의 첫 번째 면부터 1번째 행의 1번째 원소부터 2번째 원소까지 가져옵니다.
+- `arr[0:2, 1, 1:3]`: arr의 첫 번째 면부터 1번째 면의 1번째 행의 1번째 원소부터 2번째 원소까지 가져옵니다.
 - `arr[:, :, 1:3]`: arr의 모든 면의 모든 행의 1번째 원소부터 2번째 원소까지 가져옵니다.
 
 ```shell
-[[[0 1 2 3 4]
-  [5 6 7 8 9]]
+[[[ 0  1  2  3  4]
+  [ 5  6  7  8  9]]
 
- [[0 1 2 3 4]
-  [5 6 7 8 9]]]
+ [[10 11 12 13 14]
+  [15 16 17 18 19]]]
 [1 2]
 [5 6 7]
-[[3 4]
- [8 9]]
-[[[0 1 2 3 4]
-  [5 6 7 8 9]]
+[[13 14]
+ [18 19]]
+[[10 11 12 13 14]
+ [15 16 17 18 19]]
+[[ 6  7]
+ [16 17]]
+[[[ 1  2]
+  [ 6  7]]
 
- [[0 1 2 3 4]
-  [5 6 7 8 9]]]
-[[1 2]
- [6 7]]
-[[[1 2]
-  [6 7]]
-
- [[1 2]
-  [6 7]]]
+ [[11 12]
+  [16 17]]]
 ```
 
 > slicing을 하면 차원이 그대로 유지됩니다.
 
 ## fancy indexing(팬시 인덱싱)
 
-fancy indexing은 지정된 인덱스의 원소를 가져오는 방법입니다.
+fancy indexing은 지정된(여러개) 인덱스의 원소를 가져오는 방법입니다.
 
 ```python
 import numpy as np
@@ -250,8 +239,6 @@ print(arr[[0, 2, 4]])
 
 ### 2차원의 fancy indexing
 
-2차원 배열을 만들어 보겠습니다.
-
 ```python
 import numpy as np
 
@@ -261,7 +248,6 @@ print(arr)
 print(arr[[0, 1], [1, 3]])
 ```
 
-- `np.arange(10).reshape(2, 5)`: 0부터 9까지의 ndarray를 생성하고 2x5로 shape를 변경합니다.
 - `arr[[0, 1], [1, 3]]`: arr의 0번째 행의 1번째 원소와 1번째 행의 3번째 원소를 가져옵니다.
 
 ```shell
@@ -272,7 +258,7 @@ print(arr[[0, 1], [1, 3]])
 
 ## boolean indexing(불린 인덱싱)
 
-boolean indexing은 조건에 맞는 원소를 가져오는 방법입니다. 데이터 분석 등 많이 사용됩니다.
+boolean indexing은 조건에 맞는 원소를 가져오는 방법입니다. 데이터 분석 등에 많이 사용됩니다.
 
 ```python
 import numpy as np
@@ -283,7 +269,6 @@ print(arr)
 print(arr[arr > 5])
 ```
 
-- `np.arange(10)`: 0부터 9까지의 ndarray를 생성합니다.
 - `arr[arr > 5]`: arr의 원소 중 5보다 큰 원소를 가져옵니다.
 
 ```shell
@@ -292,8 +277,6 @@ print(arr[arr > 5])
 ```
 
 ### 2차원의 boolean indexing
-
-2차원 배열을 만들어 보겠습니다.
 
 ```python
 import numpy as np
@@ -304,7 +287,6 @@ print(arr)
 print(arr[arr > 5])
 ```
 
-- `np.arange(10).reshape(2, 5)`: 0부터 9까지의 ndarray를 생성하고 2x5로 shape를 변경합니다.
 - `arr[arr > 5]`: arr의 원소 중 5보다 큰 원소를 가져옵니다.
 
 ```shell
@@ -315,27 +297,24 @@ print(arr[arr > 5])
 
 ### 3차원의 boolean indexing
 
-3차원 배열을 만들어 보겠습니다.
-
 ```python
 import numpy as np
 
-arr = np.arange(10).reshape(2, 5).reshape(2, 2, 5)
+arr = np.arange(20).reshape(2, 2, 5)
 
 print(arr)
 print(arr[arr > 5])
 ```
 
-- `np.arange(10).reshape(2, 5).reshape(2, 2, 5)`: 0부터 9까지의 ndarray를 생성하고 2x5로 shape를 변경한 후 2x2x5로 shape를 변경합니다.
 - `arr[arr > 5]`: arr의 원소 중 5보다 큰 원소를 가져옵니다.
 
 ```shell
-[[[0 1 2 3 4]
-  [5 6 7 8 9]]
+[[[ 0  1  2  3  4]
+  [ 5  6  7  8  9]]
 
- [[0 1 2 3 4]
-  [5 6 7 8 9]]]
-[6 7 8 9 6 7 8 9]
+ [[10 11 12 13 14]
+  [15 16 17 18 19]]]
+[ 6  7  8  9 10 11 12 13 14 15 16 17 18 19]
 ```
 
 ### 2개 이상의 조건
@@ -364,4 +343,4 @@ print(arr[(arr > 5) & (arr < 8)])
 
 ---
 
-해시태그: #python #numpy #ndarray #reshape #flatten #ravel
+해시태그: #python #numpy #ndarray #indexing #slicing #fancy_indexing #boolean_indexing
