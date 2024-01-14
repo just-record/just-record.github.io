@@ -7,3 +7,5 @@ bundle exec jekyll serve --trace --livereload
 http://127.0.0.1:4000/
 
 ⓵⓶⓷⓸⓹⓺⓻⓼⓽⓾
+
+branch: gh-pages
