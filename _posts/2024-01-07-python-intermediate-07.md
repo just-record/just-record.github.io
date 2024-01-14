@@ -7,7 +7,7 @@ toc: true
 toc_sticky: true
 toc_label: "목차"
 ---
-decorator(데코레이터)란? 예제를 통해 알아보겠습니다.
+decorator(데코레이터)란?
 
 ## 예시
 
