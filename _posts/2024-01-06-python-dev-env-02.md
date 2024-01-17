@@ -143,7 +143,7 @@ Installing collected packages: pip
 Successfully installed pip-23.3.2
 ```
 
-## pip3.10 가상환경 설정
+## python3.10 가상환경 설정
 
 python3.10을 사용하는 가상환경을 설정합니다.
 
