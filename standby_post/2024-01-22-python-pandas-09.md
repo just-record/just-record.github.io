@@ -20,21 +20,11 @@ import pandas as pd
 
 df = pd.read_csv('train.csv')
 
-print(df.sort_index().head(3))
-# print(df.sort_index(axis=1))
-# print(df.sort_index(ignore_index=True))
-# print(df.sort_index(na_position='first'))
-# print(df.sort_index(na_position='last'))
+df = df.sort_index()
+print(df.head(3))
 ```
 
 - sort_index() 함수는 기본적으로 오름차순으로 정렬됩니다.
-
-<!-- - `ascending=False` 옵션을 주면 내림차순으로 정렬됩니다.
-- `axis=1` 옵션을 주면 열을 기준으로 정렬됩니다.
-- `na_position='first'` 옵션을 주면 결측치가 먼저 정렬됩니다.
-- `na_position='last'` 옵션을 주면 결측치가 나중에 정렬됩니다.
-- `ignore_index=True` 옵션을 주면 인덱스가 재정렬됩니다.
-- `inplace=True` 옵션을 주면 원본 데이터프레임이 정렬됩니다. -->
 
 ```python
    PassengerId  Survived  Pclass  ...     Fare Cabin  Embarked
@@ -52,7 +42,8 @@ import pandas as pd
 
 df = pd.read_csv('train.csv')
 
-df.sort_index(ascending=False).head(3)
+df = df.sort_index(ascending=False)
+print(df.head(3))
 ```
 
 ```python
@@ -62,7 +53,6 @@ df.sort_index(ascending=False).head(3)
 888          889         0       3  ...  23.4500   NaN         S
 ```
 
-
 ### 특정 열을 기준으로 정렬
 
 `sort_values()` 함수를 사용합니다.
@@ -71,37 +61,77 @@ df.sort_index(ascending=False).head(3)
 import pandas as pd
 
 df = pd.read_csv('train.csv')
-df.sort_values(by='Age', ascending=False)
+df = df.sort_values(by='Age', ascending=False)
+print(df.head(3))
 ```
 
 `ascending=False` 옵션을 주면 내림차순으로 정렬됩니다.
 
-### 여러 열을 기준으로 정렬
+#### 여러 열을 기준으로 정렬
 
 `sort_values()` 함수에 여러 열을 리스트로 입력합니다.
 
 ```python
+import pandas as pd
+
+df = pd.read_csv('train.csv')
 df.sort_values(by=['Pclass', 'Age'])
 ```
 
 `Pclass`를 기준으로 먼저 정렬되고, 그 안에서 `Age`를 기준으로 정렬됩니다.
 
-### 특정 열에 대해 정렬 순서를 다르게
+#### 특정 열에 대해 정렬 순서를 다르게
 
 `ascending` 옵션을 리스트로 입력합니다.
 
 ```python
+import pandas as pd
+
+df = pd.read_csv('train.csv')
 df.sort_values(by=['Pclass', 'Age'], ascending=[False, True])
 ```
 
 `Pclass`는 내림차순, `Age`는 오름차순으로 정렬됩니다.
 
+### axis=1
+
+`axis=1` 옵션을 주면 열을 기준으로 정렬됩니다.
+
+```python
+import pandas as pd
+
+df = pd.read_csv('train.csv')
+df = df.sort_index(axis=1)
+print(df.head(3))
+```
+
+```python
+    Age Cabin Embarked     Fare  ...     Sex  SibSp  Survived            Ticket
+0  22.0   NaN        S   7.2500  ...    male      1         0         A/5 21171
+1  38.0   C85        C  71.2833  ...  female      1         1          PC 17599
+2  26.0   NaN        S   7.9250  ...  female      0         1  STON/O2. 3101282
+```
+
+> `ascending=False` 옵션을 주면 내림차순으로 정렬됩니다.
+
+```python
+import pandas as pd
+
+df = pd.read_csv('train.csv')
+df = df.sort_index(axis=1, ascending=False)
+print(df.head(3))
+```
+
+```python
+             Ticket  Survived  SibSp     Sex  ...     Fare  Embarked  Cabin   Age
+0         A/5 21171         0      1    male  ...   7.2500         S    NaN  22.0
+1          PC 17599         1      1  female  ...  71.2833         C    C85  38.0
+2  STON/O2. 3101282         1      0  female  ...   7.9250         S    NaN  26.0
+```
+
 ## 데이터 분석 함수
 
-
-## 데이터 분석 함수
-
-### 특정 열의 평균값 구하기
+### 평균값 구하기
 
 `mean()` 함수를 사용합니다.
 
@@ -151,11 +181,62 @@ df['Age'].var()
 
 ### 특정 열의 사분위수
 
+`quantile()` 함수를 사용합니다.
 
+```python
+df['Age'].quantile(0.25)
+df['Age'].quantile(0.5)
+df['Age'].quantile(0.75)
+```
+
+### 특정 열의 요약 정보
+
+`describe()` 함수를 사용합니다.
+
+```python
+df['Age'].describe()
+```
+
+### 특정 열의 유일한 값 구하기
+
+`unique()` 함수를 사용합니다.
+
+```python
+df['Age'].unique()
+```
+
+### 특정 열의 유일한 항목의 개수 구하기
+
+`nunique()` 함수를 사용합니다.
+
+```python
+df['Age'].nunique()
+```
+
+### 특정 열의 유일한 값의 개수 구하기
+
+`value_counts()` 함수를 사용합니다.
+
+```python
+df['Age'].value_counts()
+```
+
+### 특정 열의 가장 많이 나타나는 값 구하기
+
+`mode()` 함수를 사용합니다.
+
+```python
+df['Age'].mode()
+```
+
+### 특정 열의 누적 합 구하기
+
+`cumsum()` 함수를 사용합니다.
+
+```python
+df['Age'].cumsum()
+```
 
 ---
-해시태그: #python #pandas #dataframe #자료형태 #범주형 #수치형 #명목형 #순서형 #이산형 #연속형 #astype #pd.to_numeric #apply #lambda #one-hot_encoding #get_dummies
 
----
-
-해시태그: #python #pandas #dataframe #자료형태 #범주형 #수치형 #명목형 #순서형 #이산형 #연속형 #astype #pd.to_numeric #apply #lambda #one-hot_encoding #get_dummies
+해시태그: #python #pandas #dataframe #정렬 #분석함수 #mean #median #max #min #std #var #quantile #describe #unique #nunique #value_counts #mode #cumsum
