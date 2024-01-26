@@ -159,4 +159,4 @@ A: The cafeteria started with **23** apples originally. They **used 20** to make
 
 ---
 
-해시태그: #ChatGPT #prompt engineering #인컨텍스트 러닝 #제로샷 러닝 #원샷 러닝 #퓨샷 러닝 #Chain-of-thought
+해시태그: #ChatGPT #prompt-engineering #인컨텍스트-러닝 #제로샷-러닝 #원샷-러닝 #퓨샷-러닝 #Chain-of-thought
