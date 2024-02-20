@@ -8,7 +8,7 @@ toc_sticky: true
 toc_label: "목차"
 ---
 
-Jupyter notebook으로 코딩 할 때 Copilot을 사용하고 싶어 졌습니다. Visual studio code에서 Jupyter notebook을 사용하면 Copilot을 사용할 수 있네요.
+Jupyter notebook으로 코딩 할 때 **Copilot**을 사용하고 싶어 졌습니다. Visual studio code에서 Jupyter notebook을 사용하면 Copilot을 사용할 수 있네요.
 
 ## Jupyter 확장 설치
 
@@ -21,13 +21,11 @@ Visual studio code를 실행합니다.
 
 ### 기존 Notebook 파일 열기
 
-VS Code에서 .ipynb 파일을 직접 열 수 있습니다.  
-파일 > 열기를 선택하거나, 탐색기에서 해당 파일을 더블클릭
+VS Code에서 .ipynb 파일을 직접 열 수 있습니다. 파일 > 열기를 선택하거나, 탐색기에서 해당 파일을 더블클릭 합니다.
 
 ### 새로운 Notebook 파일 생성
 
-- 새 파일을 생성하고 파일 확장자를 .ipynb로 지정
-- 커맨드 팔레트(Ctrl+Shift+P 또는 Cmd+Shift+P on macOS)를 열고 "Jupyter: Create New Blank Notebook" 명령을 실행
+새 파일을 생성하고 파일 확장자를 .ipynb로 지정합니다.
 
 ## Jupyter notebook 사용 하기
 
