@@ -73,4 +73,4 @@ visual studio code나 pycharm 같은 IDE도 위의 방법을 벗어나서 실행
 
 ---
 
-해시태그: #python #decorator #closure
+해시태그: #python #실행방법 #대화형 #스크립트

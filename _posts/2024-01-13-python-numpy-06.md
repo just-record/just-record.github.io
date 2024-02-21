@@ -205,4 +205,4 @@ print(arr.sum(axis=2))
 
 ---
 
-해시태그: #python #numpy #연산 #broadcasting
+해시태그: #python #numpy #통계함수 #sum
