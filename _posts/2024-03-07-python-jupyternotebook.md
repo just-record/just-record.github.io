@@ -33,7 +33,7 @@ pip install notebook
 
 ## Jupyter notebook 실행
 
-웹의 root 디렉토리에서 아래 명령어를 실행합니다.
+터미널(웹의 root로 지정하고 싶은 디렉토리로 이동 후)에서 아래 명령어를 실행합니다.
 
 ```bash
 jupyter notebook
