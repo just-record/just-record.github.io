@@ -10,12 +10,13 @@ toc_label: "목차"
 
 ## Jupyter notebook이란?
 
-Jupyter Notebook은 Python을 웹 기반으로 사용 할 수 있게 해줍니다. Python을 대화형으로 사용 할 수 있습니다. Python의 코드 뿐만이 아니라, 텍스트(마크다운), 수학식, 차트 및 미디어를 하나의 문서에서 결합하여 사용할 수 있게 해줍니다.
+Jupyter Notebook은 Python을 **웹 기반**으로 사용 할 수 있게 해줍니다. 그리고 Python을 **대화형**으로 사용 할 수 있습니다. 코드 뿐만이 아니라, 텍스트(마크다운 형식)를 하나의 문서에서 결합하여 사용할 수 있게 해줍니다.
 
 ### Jupyter notebook 장점
 
 - 인터랙티브한 코드 실행: 코드를 실행하고 결과를 바로 확인할 수 있습니다.
-- 텍스트 작성 용이: 텍스트(마크다운)를 사용한 설명 추가가 가능합니다.
+- 텍스트 작성 용이: 텍스트를 사용한 설명 추가가 가능합니다.
+  - 이미지, 수학식, 표 등 삽입 가능: 다양한 형식의 콘텐츠를 삽입할 수 있습니다.
 
 ### Jupyter notebook 사용 사례
 
@@ -39,7 +40,7 @@ pip install notebook
 jupyter notebook
 ```
 
-웹 브라우저에서 `http://localhost:8888`로 접속하면 Jupyter notebook을 사용 할 수 있습니다.
+웹 브라우저에서 `http://localhost:8888`로 접속하면 Jupyter notebook을 사용 할 수 있습니다. 조금 전 'jupyter notebook'을 실행 한 디렉토리의 하위 디렉토리와 파일이 목록으로 나타납니다.
 
 ## Jupyter Notebook 사용
 
@@ -78,6 +79,12 @@ Notebook을 열면(새로운 노트북 또는 기존 노트북) 새 탭에 Noteb
 - A: 선택한 셀 위에 새 셀 삽입
 - B: 선택한 셀 아래에 새 셀 삽입
 - DD (두 번 누름): 선택한 셀 삭제
+
+## Jupyter notebook 종료
+
+Jupyter notebook을 종료하려면 터미널에서 `Ctrl + C`를 누릅니다. 종료 여부를 묻는 메시지가 나타나면 `y`를 입력하고 엔터를 누릅니다.
+
+종료 하기 전에 모든 작업을 저장하고 종료하는 것을 권장합니다.
 
 ---
 
