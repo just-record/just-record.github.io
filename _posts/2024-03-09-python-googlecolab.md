@@ -45,10 +45,17 @@ from google.colab import drive
 drive.mount('/content/drive')
 ```
 
-링크가 표시될 것입니다. 이 링크를 클릭하여 Google 계정을 선택하고, Colab이 Google 드라이브에 접근할 수 있는 권한을 부여합니다.
-생성된 인증 코드를 복사하여 Colab에 붙여넣고 Enter 키를 누릅니다.
+링크가 표시될 것입니다. 이 링크를 클릭하여 Google 계정을 선택하고, Colab이 Google 드라이브에 접근할 수 있는 권한을 부여합니다. 생성된 인증 코드를 복사하여 Colab에 붙여넣고 Enter 키를 누릅니다.
 
 '/content/drive/' 경로를 통해 Google 드라이브의 파일에 접근할 수 있습니다.
+
+노트북의 코드 셀에 아래의 코드 입력
+
+```python
+!ls '/content/drive'
+```
+
+Google Drive의 파일 목록이 출력됩니다
 
 ---
 
