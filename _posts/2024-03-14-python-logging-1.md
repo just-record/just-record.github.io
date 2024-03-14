@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Python - Logging - 1"
+title: "Python - Logging - 1 (로깅 기본)"
 categories: Python
 tag: [Python, Logging]
 toc: true
@@ -54,7 +54,6 @@ logging은 Python에서 로깅 기능을 제공하는 표준 라이브러리 모
 - 로거 이름은 계층 구조를 가질 수 있으며, 점(.)으로 구분됩니다. (예: 'main.sub')
 - 같은 이름으로 getLogger()를 호출하면 이전에 생성된 로거 객체를 반환합니다.
 - logging.root 또는 logging.getLogger()를 호출하면 루트 로거를 가져올 수 있습니다.
-  - 루트 로거를 직접 사용하는 경우는 많지 않습니다.
 
 ```python
 import logging
