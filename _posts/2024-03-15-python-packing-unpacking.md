@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "Python - packing, unpacking"
+title: "Python - 패킹(Packing), 언패킹(Unpacking)"
 categories: Python
-tag: [Python, packing, unpacking]
+tag: [Python, Packing, Unpacking]
 toc: true
 toc_sticky: true
 toc_label: "목차"
@@ -227,4 +227,4 @@ function_with_packing(a=4, b=5, 1, 2, 3)
 
 ---
 
-해시태그: #Python #packing #unpacking #*args #**kwargs
+해시태그: #Python #Packing #Unpacking #*args #**kwargs
