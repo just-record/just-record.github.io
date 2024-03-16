@@ -63,6 +63,51 @@ drive.mount('/content/drive')
 
 Google Drive의 파일 목록이 출력됩니다
 
+### Google 드라이브에 파일 저장하기
+
+노트북의 코드 셀에 아래의 코드 입력
+
+```python
+with open('/content/drive/MyDrive/test.txt', 'w') as f:
+    print(f.write('hi'))
+```
+
+Google 드라이브에 'test.txt' 파일이 생성됩니다.
+
+### Google 드라이브에서 파일 불러오기
+
+노트북의 코드 셀에 아래의 코드 입력
+
+```python
+with open('/content/drive/MyDrive/test.txt', 'r') as f:
+    print(f.read())
+```
+
+'hi'가 출력됩니다.
+
+## Colab 노트북이 실행 되는 곳
+
+Colab 노트북을 생성(또는 기존의 노트북을 open) 하면 새로운 서버를 생성하고 그 서버에 노트북이 실행됩니다. 새로운 서버는 파이썬과 필요한 라이브러리가 설치 된 상태로 Colab 서비스를 제공 할 수 있는 상태로 생성됩니다. 구글 드라이브에서 실행 되는 것이 아닙니다. 구글 드라이브는 Colab 서비스와 연동 되어 노트북 소스코드를 저장하는 용도로 사용됩니다.
+
+### Colab 서버에 파일 저장하기
+
+```python
+with open('test.txt', 'w') as f:
+    print(f.write('Colab server'))
+```
+
+구글 드라이브에서는 'test.txt' 파일이 생성되지 않습니다. 새롭게 생성되어 할당 된 Colab 서버에 저장됩니다.
+
+확인을 하기 위해서는 좌측의 '파일' 아이콘을 클릭하면 'test.txt' 파일이 생성되어 있습니다.
+
+노트북 파일을 닫으면(또는 세션을 종료하면) 생성된 서버를 삭제하므로 파일도 함께 삭제 됩니다.
+
+### Colab 서버에 파일 업로드하기
+
+좌측의 '파일' 아이콘을 클릭합니다. 새롭게 생성된 서버의 파일 목록이 표시됩니다. '업로드' 버튼을 클릭하거나 로컬 탐색기의 파일을 드래그하여 업로드 할 수 있습니다.
+
+업로드 된 파일은 노트북 파일을 닫으면(또는 세션을 종료하면) 생성된 서버를 삭제하므로 파일도 함께 삭제 됩니다.
+
 ---
 
 해시태그: #Python #Google Colab #Google Drive
