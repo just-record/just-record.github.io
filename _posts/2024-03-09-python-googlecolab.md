@@ -34,6 +34,12 @@ Google Colab을 사용하기 위해서는 웹 브라우저와 Google 계정만 �
   - 최초 실행 시 에는 '더보기' -> '연결할 앱 더보기' -> 'Google Colaboratory'를 검색하여 설치
 - 작업한 노트북은 Google 드라이브에 저장되므로 추후에도 언제든지 접근할 수 있습니다.
 
+## GPU 사용하기
+
+Colab은 무료로 GPU를 사용할 수 있습니다. 노트북의 메뉴에서 '런타임' -> '런타임 유형 변경' -> '하드웨어 가속기'에서 GPU를 선택합니다.
+
+세션이 종료 되고 런타임이 다시 시작됩니다. 이 후에는 GPU를 사용할 수 있습니다. 이전에 실행했던 내역은 모두 사라집니다.
+
 ## Google 드라이브와 Colab 연결하기
 
 Google Colab은 Google 드라이브에 저장된 데이터를 쉽게 불러오거나 저장할 수 있습니다.
@@ -47,12 +53,12 @@ drive.mount('/content/drive')
 
 링크가 표시될 것입니다. 이 링크를 클릭하여 Google 계정을 선택하고, Colab이 Google 드라이브에 접근할 수 있는 권한을 부여합니다. 생성된 인증 코드를 복사하여 Colab에 붙여넣고 Enter 키를 누릅니다.
 
-'/content/drive/' 경로를 통해 Google 드라이브의 파일에 접근할 수 있습니다.
+'/content/drive/MyDrive' 경로를 통해 Google 드라이브의 파일에 접근할 수 있습니다.
 
 노트북의 코드 셀에 아래의 코드 입력
 
 ```python
-!ls '/content/drive'
+!ls /content/drive/MyDrive
 ```
 
 Google Drive의 파일 목록이 출력됩니다
