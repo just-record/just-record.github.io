@@ -29,4 +29,4 @@ result = add(3, 5)
 
 ---
 
-해시태그: #Python #Parameter와 #Argument의
+해시태그: #Python #Parameter #Argument
