@@ -71,14 +71,18 @@ Passlib는 파이썬에서 안전한 비밀번호 해싱을 쉽게 구현할 수
 ### 설치
 
 ```bash
-pip install passlib bcrypt
+pip install passlib
+```
+
+<!-- ```bash
+pip install passlib[bcrypt]
 ```
 
 만약 'bcrypt'가 아닌 다른 알고리즘을 사용하려면 해당 알고리즘을 설치해야 합니다.
 
 ```bash
 pip install passlib argon2-cffi
-```
+``` -->
 
 ### 예제
 
