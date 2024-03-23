@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Python - 가상환경"
+title: "Python - 가상환경(venv)"
 categories: Python
 tag: [Python, venv]
 toc: true
@@ -75,6 +75,59 @@ pip install pandas
 ```bash
 deactivate
 ```
+
+## 패키지 분리 확인
+
+'myenv'와 'myenv2'라는 가상환경을 생성하고 각각에 'pandas' 패키지를 설치한 후 패키지 목록을 확인합니다.
+
+### 'myenv' 가상환경
+
+```bash
+# 가상환경 생성
+python -m venv myenv
+
+# 가상환경 활성화
+source myenv/bin/activate
+
+# 패키지 설치
+pip install pandas
+
+# 패키지 목록 확인
+pip list
+
+# import 패키지
+python
+
+>>> import pandas
+>>>
+# 정상적으로 패키지가 설치되어 import할 수 있습니다.
+```
+
+디렉토리 경로 확인: `\myenv\Lib\site-packages` 디렉토리에 'pandas' 패키지가 설치되어 있습니다.
+
+### 'myenv2' 가상환경
+
+```bash
+# 가상환경 생성
+python -m venv myenv2
+
+# 가상환경 활성화
+source myenv2/bin/activate
+
+# 패키지 목록 확인
+pip list
+
+# import 패키지
+python
+
+>>> import pandas
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'pandas'
+# 패키지가 설치되지 않아 import할 수 없습니다.
+```
+
+디렉토리 경로 확인: `\myenv2\Lib\site-packages` 디렉토리에 'pandas' 패키지가 없습니다.
 
 ---
 

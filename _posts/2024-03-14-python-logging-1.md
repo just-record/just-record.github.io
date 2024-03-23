@@ -115,14 +115,13 @@ logger.warning(f'The value is {value}')
 
 ### 스트림 핸들러(StreamHandler)
 
-로그 메시지를 파일이나 네트워크 소켓이 아닌 스트림(stream)으로 출력합니다. StreamHandler는 표준 출력(sys.stdout) 또는 표준 에러(sys.stderr)로 로그를 출력합니다.
+로그 메시지를 파일이나 스트림(stream)으로 출력합니다.
 
 ```python
 import logging
-import sys
 
 # 스트림 핸들러 생성
-stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler = logging.StreamHandler()
 
 # 로거에 핸들러 추가
 logger = logging.getLogger('my_logger')
