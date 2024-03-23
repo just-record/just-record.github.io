@@ -129,6 +129,44 @@ ModuleNotFoundError: No module named 'pandas'
 
 디렉토리 경로 확인: `\myenv2\Lib\site-packages` 디렉토리에 'pandas' 패키지가 없습니다.
 
+## requirements.txt
+
+'requirements.txt' 파일은 프로젝트에 필요한 패키지 목록을 저장하는 파일입니다. `pip install -r requirements.txt` 명령을 사용하여 한 번에 패키지를 설치할 수 있습니다.
+
+`pip freeze` 명령을 사용하여 현재 활성화된 가상환경의 패키지 목록을 `requirements.txt` 파일로 저장할 수 있습니다.
+
+### 설치하기
+
+`requirements.txt`
+
+```plaintext
+beautifulsoup4
+requests
+```
+
+버전 명시
+
+```plaintext
+beautifulsoup4==4.9.3
+requests==2.25.1
+```
+
+터미널에서 아래 명령을 실행합니다.
+
+```bash
+pip install -r requirements.txt
+```
+
+'requirements.txt' 파일의 내용대로 패키지가 설치됩니다.
+
+### 생성하기
+
+터미널에서 아래 명령을 실행하여 현재 활성화된 가상환경의 패키지 목록을 `requirements.txt` 파일로 저장합니다.
+
+```bash
+pip freeze > requirements.txt
+```
+
 ---
 
-해시태그: #Python #가상환경 #VirtualEnvironment #venv #Source #activate
+해시태그: #Python #가상환경 #VirtualEnvironment #venv #Source #activate #deactivate #requirements.txt
