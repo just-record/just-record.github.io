@@ -188,11 +188,16 @@ process_status("stop")  # 타입 힌트는 강제성이 아니으로 에러가 �
 from typing import Annotated
 
 Value = Annotated[int, "Must be >0"]
-x: Value = 5  # OK
-y: Value = -1  # 에러 발생: Must be >0
+x: Value = 5 
+y: Value = -1  # 에러는 발생 하지 않음
+
+print(x, y)
 
 def add(a: Annotated[int, "First arg"], b: Annotated[int, "Second arg"]) -> int:
     return a + b
+
+print(add(3, 4))
+print(add("3", "4"))  # 에러는 발생 하지 않음
 ```
 
 ---
