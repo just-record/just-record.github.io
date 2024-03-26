@@ -25,14 +25,14 @@ MongoDB Community Server Download -> select package -> (Version, Platform, Packa
 - MongoDB 서버 설치
 - Compass 설치(서버 접속 프로그램)
 
-## MongoDB 접속
-
 MongoDB Compass를 사용하여 MongoDB에 접속할 수 있습니다.
+
+<!-- ## MongoDB 조회, 입력, 수정, 삭제
 
 - MongoDB 조회: 참조자료 - <https://minimilab.tistory.com/43>
 - MongoDB 입력: 참조자료 - <https://cionman.tistory.com/46>
 - MongoDB 수정: 참조자료 - <https://velopert.com/545>
-- MongoDB 삭제: 참조자료 - <https://www.zerocho.com/category/MongoDB/post/579ecb1fc097d015000404dd>
+- MongoDB 삭제: 참조자료 - <https://www.zerocho.com/category/MongoDB/post/579ecb1fc097d015000404dd> -->
 
 ## 'pymongo' 모듈
 
