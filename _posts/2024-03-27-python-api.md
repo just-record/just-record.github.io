@@ -2,7 +2,7 @@
 layout: single
 title: "Python - 공공데이터 포털 Open API 사용하기"
 categories: Python
-tag: [Python, API]
+tag: [Python, OpenAPI]
 toc: true
 toc_sticky: true
 toc_label: "목차"
@@ -185,4 +185,4 @@ print(len(list_all[0]))
 
 ---
 
-해시태그: #OpenAPI #공공데이터포털 #requests #json #MongoDB #PostgreSQL
+해시태그: #OpenAPI #공공데이터포털 #requests #json #JSONViewer
