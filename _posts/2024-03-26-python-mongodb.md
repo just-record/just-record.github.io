@@ -18,14 +18,29 @@ NoSQL은 관계형 데이터베이스 대신 키-값, 문서, 열 지향, 그래
 
 ## MongoDB 설치
 
+### 설치 파일 다운로드    
+
 [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
 
 MongoDB Community Server Download -> select package -> (Version, Platform, Package) 선택 -> Download
 
-- MongoDB 서버 설치
-- Compass 설치(서버 접속 프로그램)
+2024년 3월 30일 기준: Version - 7.07, Platform - Windows, Package - msi, mongodb-windows-x86_64-7.0.7-signed.msi
 
-MongoDB Compass를 사용하여 MongoDB에 접속할 수 있습니다.
+### 설치(서버 및 클라이언트)
+
+다운로드 받은 파일을 실행하여 MongoDB를 설치합니다.
+
+Next -> I accept the terms in the License Agreement -> Next -> Complete -> Run service as Network Service user ->  Next -> Next -> Install -> Finish
+
+### Compass
+
+MongoDB Compass(서버 접속 프로그램)이 자동으로 실행 됩니다. Compass를 사용하여 MongoDB에 접속할 수 있습니다.
+
+'Start' 버튼 클릭
+
+New Connection -> 'Connect' 버튼 클릭
+
+- URI: mongodb://localhost:27017
 
 <!-- ## MongoDB 조회, 입력, 수정, 삭제
 
