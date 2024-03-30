@@ -18,7 +18,7 @@ NoSQL은 관계형 데이터베이스 대신 키-값, 문서, 열 지향, 그래
 
 ## MongoDB 설치
 
-### 설치 파일 다운로드    
+### 설치 파일 다운로드
 
 [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
 
