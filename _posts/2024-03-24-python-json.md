@@ -141,7 +141,11 @@ GET 요청 예시
 ```python
 import requests
 
-response = requests.get('https://api.example.com/data')
+# requests test - https://pythonscraping.com/pages/page3.html
+# json api test - https://api.sampleapis.com/beers/ale
+
+response = requests.get('https://api.example.com/data') 
+
 data = response.json()
 print(data)
 ```
