@@ -40,6 +40,7 @@ toc_label: "목차"
 파이썬 객체를 JSON 문자열로 변환하는 방법입니다.
 
 ```python
+# pip install json
 import json
 
 data = {
@@ -112,7 +113,8 @@ JSON 데이터를 파이썬 객체로 변환할 때 예외가 발생할 수 있�
 ```python
 import json
 
-json_string = '{"name": "Alice", "age": 25, "is_student": false}'
+# json_string = '{"name": "Alice", "age": 25, "is_student": false}'
+json_string = '{"name": "Alice" "age": 25, "is_student": false}'
 try:
     data = json.loads(json_string)
     print(data)
