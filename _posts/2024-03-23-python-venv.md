@@ -129,6 +129,10 @@ ModuleNotFoundError: No module named 'pandas'
 
 디렉토리 경로 확인: `\myenv2\Lib\site-packages` 디렉토리에 'pandas' 패키지가 없습니다.
 
+### 가상환경 삭제
+
+가상환경을 삭제하려면 해당 디렉토리를 삭제하면 됩니다.
+
 ## requirements.txt
 
 'requirements.txt' 파일은 프로젝트에 필요한 패키지 목록을 저장하는 파일입니다. `pip install -r requirements.txt` 명령을 사용하여 한 번에 패키지를 설치할 수 있습니다.

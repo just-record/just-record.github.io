@@ -217,7 +217,8 @@ schema = {
     "required": ["name", "age"]
 }
 
-data = {"name": "John", "age": 30}
+# data = {"name": "John", "age": 30}
+data = {"name": "John", "age": "30"}
 
 try:
     jsonschema.validate(instance=data, schema=schema)

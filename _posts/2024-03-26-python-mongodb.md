@@ -246,7 +246,7 @@ db = client.test_database
 collection = db.test_collection
 
 # like
-search_results = collection.find({'name':{'$regex':'김'}})
+search_results = collection.find({'name':{'$regex':'길'}})
 for search_result in search_results:
     print(search_result)
 ```
@@ -317,6 +317,15 @@ collection.delete_many ({'age':{'$gte':30}})
 search_results = collection.find()
 for search_result in search_results:
     print(search_result)
+```
+
+## MongoDB 접속 종료
+
+```python
+from pymongo import MongoClient
+
+client = MongoClient('localhost', 27017)
+client.close()
 ```
 
 ---
