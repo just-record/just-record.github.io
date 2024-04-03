@@ -190,17 +190,17 @@ if __name__ == '__main__':
 </head>
 <body>
     <h1>Controll If</h1>
-    {% if score >= 90  %}
+    '{'% if score >= 90  %}
     <li>A학점</li>
-    {% elif score >= 80  %}
+    '{'% elif score >= 80  %}
     <li>B학점</li>
-    {% elif score >= 70  %}
+    '{'% elif score >= 70  %}
     <li>C학점</li>
-    {% elif score >= 60  %}
+    '{'% elif score >= 60  %}
     <li>D학점</li>
-    {% else  %}
+    '{'% else  %}
     <li>F학점</li>
-    {% endif %}
+    '{'% endif %}
 </body>
 </html>
 ```
