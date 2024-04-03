@@ -172,9 +172,9 @@ if __name__ == '__main__':
 <body>
     <h1>Controll For</h1>
     <ul>
-        '{'% for board in boards %}
+        {% for board in boards %}
         <li>{{ board }}</li>
-        '{'% endfor %}
+        {% endfor %}
     </ul>
 </body>
 </html>
@@ -190,17 +190,17 @@ if __name__ == '__main__':
 </head>
 <body>
     <h1>Controll If</h1>
-    '{'% if score >= 90  %}
+    {% if score >= 90  %}
     <li>A학점</li>
-    '{'% elif score >= 80  %}
+    {% elif score >= 80  %}
     <li>B학점</li>
-    '{'% elif score >= 70  %}
+    {% elif score >= 70  %}
     <li>C학점</li>
-    '{'% elif score >= 60  %}
+    {% elif score >= 60  %}
     <li>D학점</li>
-    '{'% else  %}
+    {% else  %}
     <li>F학점</li>
-    '{'% endif %}
+    {% endif %}
 </body>
 </html>
 ```
@@ -518,10 +518,6 @@ if __name__ == '__main__':
 
 - `app.register_blueprint(code_app, url_prefix='/code')`: '/code' 경로로 code_app Blueprint 객체를 등록합니다.
 - `app.register_blueprint(todo_app, url_prefix='/todo')`: '/todo' 경로로 todo_app Blueprint 객체를 등록합니다.
-
-## TODO
-
-아주 기본 적인 Flask 사용법을 알아보았습니다. 추후 내용을 추가 할 예정입니다.
 
 ---
 
