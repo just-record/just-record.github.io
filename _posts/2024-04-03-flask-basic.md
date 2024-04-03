@@ -172,9 +172,9 @@ if __name__ == '__main__':
 <body>
     <h1>Controll For</h1>
     <ul>
-        {% for board in boards %}
+        '{'% for board in boards %}
         <li>{{ board }}</li>
-        {% endfor %}
+        '{'% endfor %}
     </ul>
 </body>
 </html>
