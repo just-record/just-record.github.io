@@ -35,7 +35,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-실행(터미털):
+실행 - 터미널:
 
 ```bash
 python app.py
