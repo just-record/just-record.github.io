@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Python - Jinja2"
+title: "Python - Jinja2(템플릿 엔진)"
 categories: Python
 tag: [Python, Jinja2]
 toc: true
