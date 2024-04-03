@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Flask - 기본 사용법"
+title: "Flask - Python 마이크로 웹 프레임워크"
 categories: Flask
 tag: [Flask, Python]
 toc: true
