@@ -693,6 +693,125 @@ uvicorn main:app --reload
 - `http://localhost:8000/get_session_data`에 접속: `user_id: user123`
 - 다른 브라우저에서 `http://localhost:8000/get_session_data`에 접속: 'No session found'
 
+## fastapi-redis-session
+
+`fastapi-redis-session` 라이브러리를 사용하면 FastAPI에서 Redis를 사용하여 세션을 저장할 수 있습니다.
+
+```bash
+pip install fastapi-redis-session
+```
+
+`main.py`
+
+```python
+from typing import Any
+from fastapi import Depends, FastAPI, Request, Response
+from fastapi_redis_session import deleteSession, getSession, getSessionId, getSessionStorage, setSession, SessionStorage
+
+app = FastAPI(title=__name__)
+
+
+@app.post("/setSession")
+async def _setSession(
+    request: Request, response: Response, sessionStorage: SessionStorage = Depends(getSessionStorage)
+):
+    sessionData = await request.json()
+    setSession(response, sessionData, sessionStorage)
+
+
+@app.get("/getSession")
+async def _getSession(session: Any = Depends(getSession)):
+    return session
+
+
+@app.post("/deleteSession")
+async def _deleteSession(
+    sessionId: str = Depends(getSessionId), sessionStorage: SessionStorage = Depends(getSessionStorage)
+):
+    deleteSession(sessionId, sessionStorage)
+    return None
+```
+
+실행:
+
+```bash
+uvicorn main:app --reload
+# 외부 접속 허용은 아래와 같이 실행
+# uvicorn main:app --reload --host 0.0.0.0 --port=8000
+```
+
+테스트:
+
+`main_test.py`: python 파일을 생성하여 테스트
+
+```python
+import requests
+
+BASE_URL = "http://localhost:8000"
+
+# Helper function to get cookies
+def get_cookies(response):
+    return response.cookies
+
+# Test /setSession endpoint
+def set_session(data):
+    url = f"{BASE_URL}/setSession"
+    response = requests.post(url, json=data)
+    # Store cookies from the response to use in subsequent requests
+    cookies = get_cookies(response)
+    return cookies
+
+# Test /getSession endpoint
+def get_session(cookies):
+    url = f"{BASE_URL}/getSession"
+    response = requests.get(url, cookies=cookies)
+    return response.json()
+
+# Test /deleteSession endpoint
+def delete_session(cookies):
+    url = f"{BASE_URL}/deleteSession"
+    response = requests.post(url, cookies=cookies)
+    # Check if the session is successfully deleted
+    return response.ok
+
+# Example usage
+if __name__ == "__main__":
+    # Data to set in the session
+    session_data = {"username": "john_doe", "isLoggedIn": True}
+
+    # Set the session and get the cookies
+    cookies = set_session(session_data)
+    print("Session set:", session_data)
+
+    # Retrieve the session using the cookies
+    session = get_session(cookies)
+    print("Session retrieved:", session)
+
+    # Delete the session using the cookies
+    delete_success = delete_session(cookies)
+    print("Session deleted:", delete_success)
+
+    # Try to get the session again after deletion
+    session_after_deletion = get_session(cookies)
+    print("Session after deletion:", session_after_deletion)
+```
+
+실행:
+
+```bash
+python main_test.py
+```
+
+결과:
+
+```bash
+Session set: {'username': 'john_doe', 'isLoggedIn': True}
+Session retrieved: {'username': 'john_doe', 'isLoggedIn': 'True'}
+Session deleted: True
+Session after deletion: None
+```
+
 ---
 
-해시태그: #Redis #Python #데이터구조 #캐시 #작업큐 #스트림 #세션 #FastAPI #Flask
+해시태그: #Redis #Python #데이터구조 #캐시 #작업큐 #스트림 #세션 #FastAPI #Flask #파이프라인 #트랜잭션 #PubSub #fastapi-redis-session
+
