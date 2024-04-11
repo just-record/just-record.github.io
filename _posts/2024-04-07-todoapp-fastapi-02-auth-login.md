@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "FastAPI를 사용하여 TODO 애플리케이션 만들기 - 02 로그인 및 인증" 
+title: "FastAPI를 사용하여 TODO 애플리케이션 만들기 - 02 인증: 로그인" 
 categories: TODO-App
 tag: [Python, FastAPI, TODO]
 toc: true
@@ -175,6 +175,13 @@ app.include_router(auth.router)
 def read_root():
     return {"message": "Hello, FastAPI!"}
 ```
+
+### 테스트
+
+<http://localhost:8000/docs> 에 접속하여 `token` endpoint를 확인합니다.
+
+- 회원가입 하셨던 사용자로 로그인을 시도합니다.
+- '200' status code와 함께 토큰이 발급되는지 확인합니다.
 
 ---
 
