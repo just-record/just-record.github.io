@@ -253,7 +253,7 @@ if __name__ == '__main__':
 
 'static' 디렉토리를 생성하고 정적 파일을 저장합니다.
 
-`static/style.css`
+`static/styles.css`
 
 ```css
 body {
@@ -272,7 +272,7 @@ p {
 }
 ```
 
-`static/script.js`
+`static/scripts.js`
 
 ```javascript
 function alertDialogBox() {
