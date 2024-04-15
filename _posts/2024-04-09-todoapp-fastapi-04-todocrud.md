@@ -389,4 +389,4 @@ def remove_todo(current_user: Annotated[User, Depends(get_current_active_user)],
 
 ---
 
-해시태그: #TODO #FastAPI #Python #TODO #CRUD #create_todo #get_todos #update_todo #delete_todo
+해시태그: #TODO #FastAPI #Python #CRUD #create_todo #get_todos #update_todo #delete_todo

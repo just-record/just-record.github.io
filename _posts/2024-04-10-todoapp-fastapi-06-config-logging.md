@@ -411,4 +411,4 @@ def create_todo(db: Session, todo: TodoCreate) -> Todo:
 
 ---
 
-해시태그: #TODO #FastAPI #Python #TODO #Configuration #Logging
+해시태그: #TODO #FastAPI #Python #Configuration #Yaml #Logging #logger

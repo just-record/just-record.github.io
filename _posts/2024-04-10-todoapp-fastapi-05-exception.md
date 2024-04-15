@@ -349,4 +349,4 @@ def get_me(current_user: Annotated[User, Depends(get_current_active_user)]):
 
 ---
 
-해시태그: #TODO #FastAPI #Python #TODO #Exception
+해시태그: #TODO #FastAPI #Python #Exception #JSONResponse #HTTP_500_INTERNAL_SERVER_ERROR #HTTP_400_BAD_REQUEST
