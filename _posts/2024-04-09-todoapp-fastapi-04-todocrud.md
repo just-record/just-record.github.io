@@ -10,6 +10,10 @@ toc_label: "목차"
 
 FastAPI를 사용하여 서비스를 개발하여 FastAPI와 Python의 기능을 익히고자 합니다. 애플리케이션은 TODO 애플리케이션을 개발하고자 합니다. 이번 내용은 서비스 개발에 중점을 두었습니다. Python과  FastAPI 기능에 대한 내용은 생략하겠습니다. 추가로 Dabtbase는 PostgreSQL을 사용합니다.
 
+github: [https://github.com/just-record/todo_fastapi](https://github.com/just-record/todo_fastapi)
+
+- 각 단계별로 branch를 생성하여 작업합니다.
+
 네 번째로 TODO CRUD(Create, Read, Update, Delete) 기능입니다.
 
 ## 6. TODO CRUD
