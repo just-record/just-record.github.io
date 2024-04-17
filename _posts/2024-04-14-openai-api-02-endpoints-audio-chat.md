@@ -591,4 +591,4 @@ print(response.choices[0].message.content)
 
 ---
 
-해시태그: #OpenAI #API #Python #curl #Authorization #HTTP-Request #Stream #python-dotenv #API-Key #json-mode
+해시태그: #OpenAI #API #Python #audio #chat #endpoint #TTS #STT #chat-completions #function-calling #JSON-mode

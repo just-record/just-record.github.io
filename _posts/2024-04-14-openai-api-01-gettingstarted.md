@@ -229,4 +229,4 @@ Stream을 사용하면 모델이 답변을 생성하는 동안에도 클라이�
 
 ---
 
-해시태그: #OpenAI #API #Python #curl #Authorization #HTTP-Request #Stream #python-dotenv #API-Key
+해시태그: #OpenAI #API #Python #OPENAI_API_KEY #Authentication #python-dotenv #Streaming
