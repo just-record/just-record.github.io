@@ -372,4 +372,4 @@ harassment/threatening:  0.5712487697601318
 
 ---
 
-해시태그: #OpenAI #API #Python #endpoint #embedding #text-embedding-ada-002 #images #Dalle-3 #Dalle-2 #create-image #create-image-edit
+해시태그: #OpenAI #API #Python #endpoint #embedding #text-embedding-ada-002 #images #Dalle #Models #Moderations
