@@ -213,6 +213,165 @@ print(response.data[1].url)
 
 변형된 이미지를 생성합니다. 프롬프트를 주어 원하는 방향으로 변형 하지는 못합니다.
 
+## Models
+
+API를 사용하여 모델을 조회하고 삭제합니다.
+
+모델 목록 조회만 정리하겠습니다.
+
+API: <https://platform.openai.com/docs/api-reference/models/list>
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+response = client.models.list()
+
+print(len(response.data))
+models = response.data
+for model in models:
+    print(f'model.id: {model.id}')
+    print(f'model.object: {model.object}')
+    print(f'model.created: {model.created}')
+    print(f'model.owned_by: {model.owned_by}')
+    print('-----------')
+```
+
+결과:
+
+**파인 튜닝 된 모델도 포함되어 있습니다.**
+
+```plaintext;
+32
+model.id: gpt-4-turbo-2024-04-09
+model.object: model
+model.created: 1712601677
+model.owned_by: system
+-----------
+...
+```
+
+- 모델 검색: <https://platform.openai.com/docs/api-reference/models/retrieve>
+- 파인튜닝 모델 삭제: <https://platform.openai.com/docs/api-reference/models/delete>
+- 모델 객체: <https://platform.openai.com/docs/api-reference/models/object>
+
+
+
+## Moderation
+
+텍스트가 잠재적으로 유해한지 여부를 확인합니다.
+
+가이드: <https://platform.openai.com/docs/guides/moderation/moderation>  
+API: <https://platform.openai.com/docs/api-reference/moderations>
+
+### 모더레이션 생성 (Create Moderation)
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+moderation = client.moderations.create(input="I want to kill them.")
+result = moderation.results[0]
+
+print(result.flagged)
+print('-----------')
+for key, value in result.categories:
+    print(f'{key}:  {value}')
+print('-----------')
+for key, value in result.category_scores:
+    print(f'{key}:  {value}')
+```
+
+결과:
+
+```plaintext
+True
+-----------
+harassment:  True
+harassment_threatening:  True
+hate:  False
+hate_threatening:  False
+self_harm:  False
+self_harm_instructions:  False
+self_harm_intent:  False
+sexual:  False
+sexual_minors:  False
+violence:  True
+violence_graphic:  False
+self-harm:  False
+sexual/minors:  False
+hate/threatening:  False
+violence/graphic:  False
+self-harm/intent:  False
+self-harm/instructions:  False
+harassment/threatening:  True
+-----------
+harassment:  0.5278584957122803
+harassment_threatening:  0.5712487697601318
+hate:  0.2324090600013733
+hate_threatening:  0.024183575063943863
+self_harm:  2.3696395601291442e-06
+self_harm_instructions:  1.132860139030356e-09
+self_harm_intent:  1.7161115692942985e-06
+sexual:  1.205232911161147e-05
+sexual_minors:  7.506431387582779e-08
+violence:  0.997192919254303
+violence_graphic:  3.399916022317484e-05
+self-harm:  2.3696395601291442e-06
+sexual/minors:  7.506431387582779e-08
+hate/threatening:  0.024183575063943863
+violence/graphic:  3.399916022317484e-05
+self-harm/intent:  1.7161115692942985e-06
+self-harm/instructions:  1.132860139030356e-09
+harassment/threatening:  0.5712487697601318
+```
+
+### Moderation 객체 (The moderation Object)
+
+```json
+{
+    "id": "modr-XXXXX",
+    "model": "text-moderation-007",
+    "results": [
+        {
+            "flagged": true,
+            "categories": {
+                "sexual": false,
+                "hate": false,
+                "harassment": false,
+                "self-harm": false,
+                "sexual/minors": false,
+                "hate/threatening": false,
+                "violence/graphic": false,
+                "self-harm/intent": false,
+                "self-harm/instructions": false,
+                "harassment/threatening": true,
+                "violence": true
+            },
+            "category_scores": {
+                "sexual": 1.2282071e-6,
+                "hate": 0.010696256,
+                "harassment": 0.29842457,
+                "self-harm": 1.5236925e-8,
+                "sexual/minors": 5.7246268e-8,
+                "hate/threatening": 0.0060676364,
+                "violence/graphic": 4.435014e-6,
+                "self-harm/intent": 8.098441e-10,
+                "self-harm/instructions": 2.8498655e-11,
+                "harassment/threatening": 0.63055265,
+                "violence": 0.99011886
+            }
+        }
+    ]
+}
+```
+
 ---
 
 해시태그: #OpenAI #API #Python #endpoint #embedding #text-embedding-ada-002 #images #Dalle-3 #Dalle-2 #create-image #create-image-edit
