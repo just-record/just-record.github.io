@@ -258,8 +258,6 @@ model.owned_by: system
 - 파인튜닝 모델 삭제: <https://platform.openai.com/docs/api-reference/models/delete>
 - 모델 객체: <https://platform.openai.com/docs/api-reference/models/object>
 
-
-
 ## Moderation
 
 텍스트가 잠재적으로 유해한지 여부를 확인합니다.
