@@ -96,9 +96,110 @@ print(response.data[0].embedding[:10]))
 - `embedding`: 임베딩 벡터입니다. 임베딩 모델에 따라 길이가 다를 수 있습니다.
 - `index`: 입력 텍스트의 인덱스입니다.
 
-## Fine-tunning, Batch, Files
+## Fine-tunning, Batch
 
 어느 정도의 규모와 비용이 있어야 한다는 판단 등으로 정리를 생략하겠습니다.
+
+## Files
+
+### 파일 업로드 (Upload File)
+
+파일(문서)를 업로드 합니다. (파인 튜닝 또는 Assistant, Message에서 사용)
+
+API: <https://platform.openai.com/docs/api-reference/files/create>
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+my_file = client.files.create(
+  file=open("train.csv", "rb"),
+  purpose="assistants" # 'fine-tune', 'assistants', 'batch', 'user_data', 'responses'
+)
+
+print(my_file.to_dict())
+```
+
+### 파일 목록 (List Files)
+
+파일 목록을 조회합니다.
+
+API: <https://platform.openai.com/docs/api-reference/files/list>
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+files = client.files.list()
+
+for file in files.to_dict()['data']:
+  print(file)
+```
+
+### 파일 조회 (Retrieve File)
+
+파일을 조회합니다. 파일 ID를 사용합니다.
+
+API: <https://platform.openai.com/docs/api-reference/files/retrieve>
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+client = OpenAI()
+
+file = client.files.retrieve("file-abc123")
+
+print(file.to_dict())
+```
+
+### 파일 삭제 (Delete File)
+
+파일을 삭제합니다.
+
+API: <https://platform.openai.com/docs/api-reference/files/delete>
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+file = client.files.delete("file-abc123")
+
+print(file.to_dict())
+```
+
+### 파일 콘텐츠 검색 (Retrieve file content)
+
+파일의 콘텐츠를 검색합니다.
+
+API: <https://platform.openai.com/docs/api-reference/files/retrieve-contents>
+
+`assistants` 파일은 콘텐츠를 검색할 수 없습니다. `fine-tune`용의 파일은 검색 되는걸 확인 했습니다.
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+content = client.files.retrieve_content("file-123abc")
+
+print(content)
+```
+
+### 파일 객체 (The file Object)
+
+API: <https://platform.openai.com/docs/api-reference/files/object>
 
 ## Images
 
