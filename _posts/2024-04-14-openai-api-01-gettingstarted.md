@@ -10,9 +10,9 @@ toc_label: "목차"
 
 수정 일자: 2024-04-10
 
-출처: <https://platform.openai.com/docs/api-reference/introduction>
+출처: <https://platform.openai.com/docs/api-reference>
 
-OpenAI의 공식 문서를 정리(그냥 제가 이해 할 수 있는 것만)한 것입니다. Python 기준으로 간단하게 작성하였습니다.
+OpenAI의 공식 문서를 거의 그대로 옮긴 것입니다. Python 기준으로 간단하게 작성하였습니다.
 
 OpenAI의 API를 사용하면 OpenAI에서 제공하는 [웹 사이트](https://chat.openai.com)가 아닌 다른 곳에서 OpenAI의 인공지능 기능을 사용할 수 있습니다. 개발하고자 하는 서비스에 OpenAI의 인공지능 기능을 추가 할 수 있습니다.
 
