@@ -502,7 +502,7 @@ print(model.model_dump_json())
 
 ## Moderation
 
-텍스트가 잠재적으로 유해한지 여부를 확인합니다.
+Moderations를 생성 하여 텍스트가 잠재적으로 유해한지 확인합니다.
 
 가이드: <https://platform.openai.com/docs/guides/moderation/moderation>  
 API: <https://platform.openai.com/docs/api-reference/moderations>
