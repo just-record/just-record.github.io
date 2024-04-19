@@ -18,6 +18,8 @@ OpenAI의 API를 사용하면 OpenAI에서 제공하는 [웹 사이트](https://
 
 Endpoint는 OpenAI API의 URL을 의미합니다. 각 Endpoint는 OpenAI의 서비스 중 하나를 나타냅니다. 예를 들어, `https://api.openai.com/v1/chat/completions`는 채팅을 완성하는 데 사용되는 Endpoint입니다.
 
+OpenAI API 연습 코드: <https://github.com/just-record/openai_api>
+
 ## Embedding
 
 텍스트를 숫자로 변환하는 API입니다. 임베딩은 부동 소숫점 숫자로 이루어진 벡터입니다. 임베딩은 텍스트(단어, 문장)의 의미 있는 표현을 밀집 벡터 공간에 매핑하는 것을 의미합니다.
@@ -48,15 +50,16 @@ from openai import OpenAI
 
 client = OpenAI()
 
-response = client.embeddings.create(
-  model="text-embedding-ada-002",
-  input="The food was delicious and the waiter...",
+embedding = client.embeddings.create(
+  model="text-embedding-ada-002", # Embedding 모델 이름
+  input="나는 학교에 다니는 학생이다.",
   encoding_format="float"
 )
 
-print(len(response.data))
-print(len(response.data[0].embedding))
-print(response.data[0].embedding[:10]))
+embedding_vector = embedding.data[0].embedding
+
+print(f'Embedding vector의 길이: {len(embedding_vector)}')
+print(f'Embedding vector - 앞에서 10개 값: {embedding_vector[:10]}')
 ```
 
 - `model`: 임베딩 모델(`text-embedding-ada-002`)의 이름입니다.
@@ -65,13 +68,114 @@ print(response.data[0].embedding[:10]))
 
 결과:
 
-```python
-1
-1536
-[0.0022786001, -0.009292118, 0.015702665, -0.007711697, -0.00470953, 0.014915627, -0.009857008, -0.038209394, -0.0069310064, -0.028587228]
+```text
+Embedding vector의 길이: 1536
+Embedding vector - 앞에서 10개 값: [-0.014749587, -0.019521875, -0.0037461228, -0.020424407, -0.022044016, 0.015862295, -0.025419237, 0.008067146, -0.008091873, 0.004073754]
 ```
 
 사용 할 수 있는 임베딩 모델: <https://platform.openai.com/docs/guides/embeddings/embedding-models>
+
+## 임베딩 벡터의 차원 확인
+
+동일한 임베딩 모델은 동일한 벡터 차원을 생성 하는지 확인합니다.
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+
+model = "text-embedding-ada-002"
+sentences = [
+    '나는 학교에 다니는 학생이다.',
+    '나는 학생을 가르치는 선생님다.',
+    '오늘 날씨가 좋아서 나들이를 가고 싶다.'
+]
+
+
+client = OpenAI()
+
+
+for i, sentence in enumerate(sentences):
+    embedding = client.embeddings.create(
+    model=model,
+    input=sentence,
+    encoding_format="float"
+    )
+
+    embedding_vector = embedding.data[0].embedding
+
+    print(f'{i}번 문장의 Embedding vector의 길이: {len(embedding_vector)}')
+    print(f'{i}번 문장의 Embedding vector - 앞에서 10개 값: {embedding_vector[:10]}')
+```
+
+결과: 3개의 다른 문장의 차원은 1,536개로 동일하였고 벡테 값은 모두 달랐습니다.
+
+```text
+0번 문장의 Embedding vector의 길이: 1536
+0번 문장의 Embedding vector - 앞에서 10개 값: [-0.014749587, -0.019521875, -0.0037461228, -0.020424407, -0.022044016, 0.015862295, -0.025419237, 0.008067146, -0.008091873, 0.004073754]
+1번 문장의 Embedding vector의 길이: 1536
+1번 문장의 Embedding vector - 앞에서 10개 값: [-0.0046398193, -0.0037137263, 0.009298347, -0.02644198, 0.0038696341, 0.01648882, 0.0042562857, 0.009909506, -0.013807204, 0.011512239]
+2번 문장의 Embedding vector의 길이: 1536
+2번 문장의 Embedding vector - 앞에서 10개 값: [-0.009437798, -0.005597814, 0.011033466, -0.03842578, -0.010060498, 0.015411826, -0.0073621306, -0.0006109433, 0.0018324245, 0.0031621486]
+```
+
+### 문장(임베딩 벡터)의 유사도 확인
+
+'코사인 유사도(Cosine Similarity)'를 사용하여 두 문장의 유사도를 계산합니다.
+
+- 첫번째 문장: 나는 학교에 다니는 학생이다.
+- 두번째 문장: 나는 학생을 가르치는 선생님다.
+- 세번째 문장: 오늘 날씨가 좋아서 나들이를 가고 싶다.
+
+첫번째 문장 : 두번째 문장 | 첫번째 문장 : 세번째 문장
+
+```python
+# pip install numpy
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+import numpy as np # type: ignore
+from numpy.linalg import norm # type: ignore
+
+
+def cosine_similarity(a,b):
+    return np.dot(a,b) / (norm(a)*norm(b))
+
+
+model = "text-embedding-ada-002"
+sentences = [
+    '나는 학교에 다니는 학생이다.',
+    '나는 학생을 가르치는 선생님다.',
+    '오늘 날씨가 좋아서 나들이를 가고 싶다.'
+]
+vectors = []
+
+
+client = OpenAI()
+
+
+for i, sentence in enumerate(sentences):
+    embedding = client.embeddings.create(
+    model=model,
+    input=sentence,
+    encoding_format="float"
+    )
+
+    vectors.append(embedding.data[0].embedding)
+
+### 첫 번째 문장을 두번째, 세번째 문장과 각각 코사인 유사도 계산 - 값이 작을 수록 가까운 거리
+print(f'첫번째 문장과 두번째 문장의 거리: {1 - cosine_similarity(vectors[0], vectors[1])}')
+print(f'첫번째 문장과 세번째 문장의 거리: {1 - cosine_similarity(vectors[0], vectors[2])}')
+# '나는 학교에 다니는 학생이다.'와 '나는 학생을 가르치는 선생님다.'가 '오늘 날씨가 좋아서 나들이를 가고 싶다.'보다 더 가까운 거리에 있음을 확인할 수 있습니다.
+```
+
+결과:
+
+```text
+첫번째 문장과 두번째 문장의 거리: 0.07935289192352712
+첫번째 문장과 세번째 문장의 거리: 0.1924438784161303
+```
 
 ### 임베딩 객체 (The embedding Object)
 
@@ -137,9 +241,8 @@ from openai import OpenAI
 client = OpenAI()
 
 files = client.files.list()
-
-for file in files.to_dict()['data']:
-  print(file)
+for file in files.data:
+  print(file.model_dump_json())
 ```
 
 ### 파일 조회 (Retrieve File)
@@ -154,9 +257,9 @@ load_dotenv()
 from openai import OpenAI
 client = OpenAI()
 
-file = client.files.retrieve("file-abc123")
+file = client.files.retrieve("file-123abc")
 
-print(file.to_dict())
+print(file.model_dump_json())
 ```
 
 ### 파일 삭제 (Delete File)
@@ -172,9 +275,9 @@ from openai import OpenAI
 
 client = OpenAI()
 
-file = client.files.delete("file-abc123")
+file = client.files.delete("file-123abc")
 
-print(file.to_dict())
+print(file.model_dump_json())
 ```
 
 ### 파일 콘텐츠 검색 (Retrieve file content)
@@ -192,9 +295,8 @@ from openai import OpenAI
 
 client = OpenAI()
 
-content = client.files.retrieve_content("file-123abc")
-
-print(content)
+content = client.files.content("file-123abc")
+print(content.content.decode('utf-8')) # bytes to string
 ```
 
 ### 파일 객체 (The file Object)
@@ -216,19 +318,19 @@ API: <https://platform.openai.com/docs/api-reference/images/create>
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
 from openai import OpenAI
+import urllib.request
 
 client = OpenAI()
 
-response = client.images.generate(
+images = client.images.generate(
   model="dall-e-3",
   prompt="A cute baby sea otter",
   n=1,
   size="1024x1024"
 )
 
-print(response.data[0].revised_prompt)
-print('-------------')
-print(response.data[0].url)
+urllib.request.urlretrieve(images.data[0].url, "./baby_sea_otter.png")
+print(images.data[0].url)
 ```
 
 - `model`: 이미지 생성 모델(`dall-e-3`)의 이름입니다.
@@ -265,19 +367,20 @@ API: <https://platform.openai.com/docs/api-reference/images/createEdit>
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
 from openai import OpenAI
+import urllib.request
 
 client = OpenAI()
 
-response = client.images.edit(
+images = client.images.edit(
   image=open("otter.png", "rb"),
   mask=open("mask.png", "rb"),
   prompt="A cute baby sea otter wearing a beret",
-  n=2,
+  n=1,
   size="1024x1024"
 )
 
-print(response.data[0].url)
-print(response.data[1].url)
+urllib.request.urlretrieve(images.data[0].url, "./otter_edited.png")
+print(images.data[0].url)
 ```
 
 결과:
@@ -295,24 +398,24 @@ API: <https://platform.openai.com/docs/api-reference/images/createVariation>
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
 from openai import OpenAI
+import urllib.request
 
 client = OpenAI()
 
-response = client.images.create_variation(
+images = client.images.create_variation(
   image=open("otter.png", "rb"),
-  n=2,
-  size="1024x1024",
-  prompt="A cute baby sea otter wearing a beret",
+  n=2, # 생성할 이미지의 개수
+  size="1024x1024"
 )
 
-
-print(response.data[0].url)
-print(response.data[1].url)
+for i in range(2):
+    urllib.request.urlretrieve(images.data[i].url, f"./baby_sea_otter_{i}.png")
+    print(images.data[i].url)
 ```
 
 결과:
 
-변형된 이미지를 생성합니다. 프롬프트를 주어 원하는 방향으로 변형 하지는 못합니다.
+2개의 변형된 이미지를 생성합니다. 프롬프트를 주어 원하는 방향으로 변형 하지는 못합니다.
 
 ## Models
 
@@ -329,10 +432,9 @@ from openai import OpenAI
 
 client = OpenAI()
 
-response = client.models.list()
+models = client.models.list().data
 
-print(len(response.data))
-models = response.data
+print(f'모델의 개수: {len(models)}')
 for model in models:
     print(f'model.id: {model.id}')
     print(f'model.object: {model.object}')

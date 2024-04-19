@@ -16,6 +16,8 @@ OpenAI의 공식 문서를 거의 그대로 옮긴 것입니다. Python 기준�
 
 OpenAI의 API를 사용하면 OpenAI에서 제공하는 [웹 사이트](https://chat.openai.com)가 아닌 다른 곳에서 OpenAI의 인공지능 기능을 사용할 수 있습니다. 개발하고자 하는 서비스에 OpenAI의 인공지능 기능을 추가 할 수 있습니다.
 
+OpenAI API 연습 코드: <https://github.com/just-record/openai_api>
+
 ## 소개 (Introduction)
 
 HTTP 요청을 통해서 API를 사용 할 수 있습니다. OpenAI에서는 공식적으로 Python 바인딩과 Node.js 라이브러리를 제공하고 있습니다. 또한 [커뮤니티에서 관리하는 라이브러리](https://platform.openai.com/docs/libraries/community-libraries)도 있습니다.
