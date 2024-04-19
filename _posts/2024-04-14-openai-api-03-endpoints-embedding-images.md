@@ -421,7 +421,7 @@ for i in range(2):
 
 API를 사용하여 모델을 조회하고 삭제합니다.
 
-모델 목록 조회만 정리하겠습니다.
+### 모델 목록 (List Models)
 
 API: <https://platform.openai.com/docs/api-reference/models/list>
 
@@ -436,30 +436,69 @@ models = client.models.list().data
 
 print(f'모델의 개수: {len(models)}')
 for model in models:
-    print(f'model.id: {model.id}')
-    print(f'model.object: {model.object}')
-    print(f'model.created: {model.created}')
-    print(f'model.owned_by: {model.owned_by}')
-    print('-----------')
+    print(model.model_dump_json())
+```
+
+결과: 모델 목록을 출력합니다. (사용자가 파인 튜닝 하여 생성한 모델도 포함 되어 있습니다.)
+
+```text
+모델의 개수: 32
+{"id":"gpt-3.5-turbo-16k-0613","created":1685474247,"object":"model","owned_by":"openai"}
+{"id":"whisper-1","created":1677532384,"object":"model","owned_by":"openai-internal"}
+...
+```
+
+### 모델 검색 (Retrieve Model)
+
+모델 ID를 이용하여 모델을 검색합니다.
+
+API: <https://platform.openai.com/docs/api-reference/models/retrieve>
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+model = client.models.retrieve("gpt-3.5-turbo-16k-0613")
+
+print(model.model_dump_json())
 ```
 
 결과:
 
-**파인 튜닝 된 모델도 포함되어 있습니다.**
-
-```plaintext;
-32
-model.id: gpt-4-turbo-2024-04-09
-model.object: model
-model.created: 1712601677
-model.owned_by: system
------------
-...
+```text
+{"id":"gpt-3.5-turbo-16k-0613","created":1685474247,"object":"model","owned_by":"openai"}
 ```
 
-- 모델 검색: <https://platform.openai.com/docs/api-reference/models/retrieve>
-- 파인튜닝 모델 삭제: <https://platform.openai.com/docs/api-reference/models/delete>
-- 모델 객체: <https://platform.openai.com/docs/api-reference/models/object>
+### 파인 튜닝 된 모델 삭제 (Delete a fine-tuned model)
+
+파인 튜닝 된 모델을 삭제합니다.
+
+API: <https://platform.openai.com/docs/api-reference/models/delete>
+
+```python
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+
+client = OpenAI()
+
+model = client.models.delete("davinci:ft-personal-2023-xx-xx-xx-xx-xx")
+
+print(model.model_dump_json())
+```
+
+결과:
+
+```text
+{"id":"davinci:ft-personal-2023-xx-xx-xx-xx-xx","object":"model","deleted":true}
+```
+
+### 모델 객체
+
+<https://platform.openai.com/docs/api-reference/models/object>
 
 ## Moderation
 
