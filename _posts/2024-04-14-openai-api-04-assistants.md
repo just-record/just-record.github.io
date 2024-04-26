@@ -8,15 +8,17 @@ toc_sticky: true
 toc_label: "목차"
 ---
 
-수정 일자: 2024-04-10
+수정 일자: 2024-04-26
 
-출처: <https://platform.openai.com/docs/api-reference>
+출처: <https://platform.openai.com/docs/assistants/overview/agents>
 
 OpenAI의 공식 문서를 거의 그대로 옮긴 것입니다. Python 기준으로 간단하게 작성하였습니다.
 
 OpenAI의 API를 사용하면 OpenAI에서 제공하는 [웹 사이트](https://chat.openai.com)가 아닌 다른 곳에서 OpenAI의 인공지능 기능을 사용할 수 있습니다. 개발하고자 하는 서비스에 OpenAI의 인공지능 기능을 추가 할 수 있습니다.
 
 OpenAI API 연습 코드: <https://github.com/just-record/openai_api>
+
+문서를 작성하는 동안 Assistant API의 버전이 업데이트 되었습니다. 'V2'로 수정하였습니다.
 
 ## Assistants - Overview
 
@@ -242,122 +244,267 @@ I need to solve the equation `3x + 11 = 14`. Can you help me?
 ...
 ```
 
-## Assistants - 작동 방식
+## 대화 이어 가기
 
-<https://platform.openai.com/docs/assistants/how-it-works/agents>: Assistant의 작동 방식을 설명하고 있습니다.
+질의를 하면 답변을 합니다. 종료하기 전까지 대화를 이어 갑니다. 이전 질의를 기억하고 있습니다.
 
-<https://platform.openai.com/docs/assistants/how-it-works/objects>: Assistant의 객체에 대한 설명입니다.
+`/q`를 입력하면 대화를 종료합니다.
 
-<https://platform.openai.com/docs/assistants/how-it-works/creating-assistants>: Assistant를 생성하는 방법에 대한 설명입니다.
+### Streamimg 없이
 
-<https://platform.openai.com/docs/assistants/how-it-works/managing-threads-and-messages>: Thread와 Message를 관리하는 방법에 대한 설명입니다.
+`main.py`: 실행 파일
 
-<https://platform.openai.com/docs/assistants/how-it-works/runs-and-run-steps>: Run과 Run Steps에 대한 설명입니다.
+```python
+from  dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
 
-<https://platform.openai.com/docs/assistants/how-it-works/limitations>: Assistant의 제한 사항에 대한 설명입니다.
 
-## Assistants - Tools
+# Assistant 생성
+def get_assistant(client: OpenAI):
+    return client.beta.assistants.create(
+        name="Math Tutor",
+        instructions="You are a personal math tutor. Write and run code to answer math questions.",
+        tools=[{"type": "code_interpreter"}],
+        model="gpt-4-turbo-2024-04-09",
+    )
 
-<https://platform.openai.com/docs/assistants/tools/tools-beta>: Assistant에서 사용할 수 있는 tool에 대한 설명입니다.
 
-<https://platform.openai.com/docs/assistants/tools/code-interpreter>: Code Interpreter에 대한 설명입니다.
+# Thread 생성
+def get_thread(client: OpenAI):
+    return client.beta.threads.create()
 
-<https://platform.openai.com/docs/assistants/tools/knowledge-retrieval>: Knowledge Retrieval에 대한 설명입니다.
 
-<https://platform.openai.com/docs/assistants/tools/function-calling>: Function Calling에 대한 설명입니다.
+# Message 추가
+def add_message_to_thread(client: OpenAI, thread_id: str, message: str, role: str = "user"):
+    client.beta.threads.messages.create(
+        thread_id=thread_id,
+        role=role,
+        content=message,
+    )
 
-<https://platform.openai.com/docs/assistants/tools/supported-files>: tool에서 지원하는 파일 형식에 대한 설명입니다.
+
+# 사용자에게 질문 받기 (/q 입력시 종료)
+def get_user_query():
+    return input("Enter a math question(Enter '/q' to quit): ")
+
+
+# Run 생성
+def create_run(client: OpenAI, thread_id: str, assistant_id: str):
+    return client.beta.threads.runs.create(
+        thread_id=thread_id,
+        assistant_id=assistant_id
+    )
+
+
+# Run 조회
+def get_run(client: OpenAI, thread_id: str, run_id: str):
+    return client.beta.threads.runs.retrieve(
+        thread_id=thread_id,
+        run_id=run_id
+    )
+
+
+# 모니터링 하다가 완료되면 Run 가져오기
+def get_completed_run(client: OpenAI, thread_id: str, run_id: str):
+    run = get_run(client, thread_id, run_id)
+    while run.status == "queued" or run.status == "in_progress":
+        run = get_run(client, thread_id, run_id)
+    return run
+
+
+# Assistant 메시지 출력
+def print_assistant_messages(client: OpenAI, thread_id: str):
+    # thread_messages = client.beta.threads.messages.list(thread_id, order='asc')
+    message_history = []
+    thread_messages = client.beta.threads.messages.list(thread_id, order='desc')
+    datas = thread_messages.data
+    for data in datas:
+        if data.role == 'assistant':
+            for content in data.content:
+                if content.type == 'text' and content.text.value:
+                    message_history.append(f'Assistant> {content.text.value}')
+                elif content.type == 'image_file' and content.image_file.file_id:
+                    message_history.append(f'Assistant> {content.image_file.file_id}')
+        else:
+            break
+    
+    for message in message_history[::-1]:
+        print(message)
+
+
+# Assistant 삭제
+def delete_assistant(client: OpenAI, assistant_id: str):
+    client.beta.assistants.delete(assistant_id)
+
+# Thread 삭제
+def delete_thread(client: OpenAI, thread_id: str):
+    client.beta.threads.delete(thread_id)        
+
+
+if __name__ == '__main__':
+    client = OpenAI()
+    assistant = get_assistant(client)   # assistant 생성
+    thread = get_thread(client)         # thread 생성
+    
+    while True:     # 대화 계속 하기
+        message = get_user_query()  # "I need to solve the equation `3x + 11 = 14`. Can you help me?"
+        role = "user"
+        if message == "/q":         # /q 입력시 종료    
+            print("Quitting...")
+            break
+        else:
+            add_message_to_thread(client=client, thread_id=thread.id, message=message, role=role)  # message 추가
+            print(f'You> {message}')
+            run = create_run(client, thread.id, assistant.id)   # run 생성
+            run = get_completed_run(client, thread.id, run.id)  # run 완료되면 가져오기
+
+            # Run의 상태가 정상적으로 완료되면 메시지 출력
+            if run.status == "completed":
+                print(print_assistant_messages(client, thread.id))
+            else:
+                print("There is a problem, please try again.")
+
+    delete_assistant(client, assistant.id)  # Assistant 삭제        
+    delete_thread(client, thread.id)    # Thread 삭제
+```
+
+### Streamming으로
+
+`event_handler.py`: 이벤트 핸들러 입니다.
+
+```python
+from typing_extensions import override
+from openai import AssistantEventHandler
+ 
+class EventHandler(AssistantEventHandler):    
+    @override
+    def on_text_created(self, text) -> None:
+        print(f"\nassistant > ", end="", flush=True)
+      
+    @override
+    def on_text_delta(self, delta, snapshot):
+        print(delta.value, end="", flush=True)
+      
+    def on_tool_call_created(self, tool_call):
+        print(f"\nassistant > {tool_call.type}\n", flush=True)
+  
+    def on_tool_call_delta(self, delta, snapshot):
+        if delta.type == 'code_interpreter':
+            if delta.code_interpreter.input:
+                print(delta.code_interpreter.input, end="", flush=True)
+            if delta.code_interpreter.outputs:
+                print(f"\n\noutput >", flush=True)
+                for output in delta.code_interpreter.outputs:
+                    if output.type == "logs":
+                        print(f"\n{output.logs}", flush=True)
+```
+
+`main_stream.py`: 실행 파일
+
+```python
+from  dotenv import load_dotenv # type: ignore
+load_dotenv()
+from openai import OpenAI
+from event_handler import EventHandler
+
+
+def get_assistant(client: OpenAI):
+    return client.beta.assistants.create(
+        name="Math Tutor",
+        instructions="You are a personal math tutor. Write and run code to answer math questions.",
+        tools=[{"type": "code_interpreter"}],
+        model="gpt-4-turbo-2024-04-09",
+    )
+
+
+def get_thread(client: OpenAI):
+    return client.beta.threads.create()
+
+
+def add_message_to_thread(client: OpenAI, thread_id: str, message: str, role: str = "user"):
+    client.beta.threads.messages.create(
+        thread_id=thread_id,
+        role=role,
+        content=message,
+    )
+
+
+def get_user_query():
+    return input("\nEnter a math question(Enter '/q' to quit): ")
+
+
+def delete_assistant(client: OpenAI, assistant_id: str):
+    client.beta.assistants.delete(assistant_id)
+
+
+def delete_thread(client: OpenAI, thread_id: str):
+    client.beta.threads.delete(thread_id)        
+
+
+if __name__ == '__main__':
+    client = OpenAI()
+    assistant = get_assistant(client)
+    thread = get_thread(client)
+    
+    while True:
+        message = get_user_query()  # "I need to solve the equation `3x + 11 = 14`. Can you help me?"
+        role = "user"
+        if message == "/q":
+            print("Quitting...")
+            break
+        else:
+            add_message_to_thread(client=client, thread_id=thread.id, message=message, role=role)
+            print(f'You> {message}')
+
+            # stream 생성
+            with client.beta.threads.runs.stream(
+                thread_id=thread.id,
+                assistant_id=assistant.id,
+                event_handler=EventHandler(),
+            ) as stream:
+                stream.until_done()
+
+    delete_assistant(client, assistant.id)
+    delete_thread(client, thread.id)
+```
+
+## 그 외
+
+아래는 위의 github 주소를 링크한 것 입니다.
+
+### Tool('File Search')을 사용 하여 파일 내용 질의 하기
+
+<https://github.com/just-record/openai_api/tree/main/12.assistants-file-search>
+
+### Tool('Code Interpreter')을 사용 하여 코드 생성 및 코드 실행하기
+
+<https://github.com/just-record/openai_api/tree/main/13.assistants-code-interpreter>
+
+### Tool('Function Calling')을 사용 하여 사용자 함수 호출하기
+
+<https://github.com/just-record/openai_api/tree/main/14.assistants-functions-calling>
+
+### File Search 연습
+
+- Assistant와 Thread, Message(File) 각각 Vector Store를 생성하기
+
+<https://github.com/just-record/openai_api/tree/main/20.file_search_vector_store>
+
+### Code Interpreter 연습
+
+- 답변에 이미지가 포함된 경우
+- 답변에 text(예: CSV)가 포함된 경우
+- Code Interpreter의 input과 output을 출력하기
+
+<https://github.com/just-record/openai_api/tree/main/21.code_interpreter>
+
+### Function Calling 연습
+
+- 사용자 함수 호출하기
+
+<https://github.com/just-record/openai_api/tree/main/22.function_calling>
 
 ---
 
-## API
-
-### Assistants - API
-
-<https://platform.openai.com/docs/api-reference/assistants/createAssistant>: Assistant를 생성하는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/createAssistantFile>: Assistant에 파일을 추가하는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/listAssistants>: Assistant 목록을 가져오는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles>: Assistant의 파일 목록을 가져오는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/getAssistant>: Assistant를 검색하는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/getAssistantFile>: Assistant의 파일을 검색하는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/modifyAssistant>: Assistant를 수정하는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/deleteAssistant>: Assistant를 삭제하는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/deleteAssistantFile>: Assistant의 파일을 삭제하는 API
-
-<https://platform.openai.com/docs/api-reference/assistants/object>: Assistant 객체
-
-<https://platform.openai.com/docs/api-reference/assistants/object>: Assistant 파일 객체
-
-### Threads - API
-
-<https://platform.openai.com/docs/api-reference/threads/createThread>: Thread를 생성하는 API
-
-<https://platform.openai.com/docs/api-reference/threads/getThread>: Thread를 검색하는 API
-
-<https://platform.openai.com/docs/api-reference/threads/modifyThread>: Thread를 수정하는 API
-
-<https://platform.openai.com/docs/api-reference/threads/deleteThread>: Thread를 삭제하는 API
-
-<https://platform.openai.com/docs/api-reference/threads/object>: Thread 객체
-
-### Messages - API
-
-<https://platform.openai.com/docs/api-reference/messages/createMessage>: Message를 생성하는 API
-
-<https://platform.openai.com/docs/api-reference/messages/listMessages>: Message 목록을 가져오는 API
-
-<https://platform.openai.com/docs/api-reference/messages/listMessageFiles>: Message의 파일 목록을 가져오는 API
-
-<https://platform.openai.com/docs/api-reference/messages/getMessage>: Message를 검색하는 API
-
-<https://platform.openai.com/docs/api-reference/messages/getMessageFile>: Message의 파일을 검색하는 API
-
-<https://platform.openai.com/docs/api-reference/messages/modifyMessage>: Message를 수정하는 API
-
-<https://platform.openai.com/docs/api-reference/messages/object>: Message 객체
-
-<https://platform.openai.com/docs/api-reference/messages/file-object>: Message 파일 객체
-
-### Runs - API
-
-<https://platform.openai.com/docs/api-reference/runs/createRun>: Run을 생성하는 API
-
-<https://platform.openai.com/docs/api-reference/runs/createThreadAndRun>: Thread를 생성하고 하나의 요청으로 Run을 생성하는 API
-
-<https://platform.openai.com/docs/api-reference/runs/listRuns>: Run 목록을 가져오는 API
-
-<https://platform.openai.com/docs/api-reference/runs/listRunSteps>: 특정 Run에 속한 Steps 목록을 가져오는 API
-
-<https://platform.openai.com/docs/api-reference/runs/getRun>: Run을 검색하는 API
-
-<https://platform.openai.com/docs/api-reference/runs/getRunStep>: Run의 Step을 검색하는 API
-
-<https://platform.openai.com/docs/api-reference/runs/modifyRun>: Run을 수정하는 API
-
-<https://platform.openai.com/docs/api-reference/runs/submitToolOutputs>: Tool의 출력을 제출하는 API
-
-<https://platform.openai.com/docs/api-reference/runs/cancelRun>: Run을 취소하는 API
-
-<https://platform.openai.com/docs/api-reference/runs/object>: Run 객체
-
-<https://platform.openai.com/docs/api-reference/runs/step-object>: Run Step 객체
-
-### Streaming - API
-
-<https://platform.openai.com/docs/api-reference/assistants-streaming/message-delta-object>: Message Delta 객체
-
-<https://platform.openai.com/docs/api-reference/assistants-streaming/run-step-delta-object>: Run Step Delta 객체
-
-<https://platform.openai.com/docs/api-reference/assistants-streaming/events>: Run을 streaming 할 때 발생하는 이벤트
-
----
-
-해시태그: #OpenAI #API #Python #assistants #api
+해시태그: #OpenAI #API #Python #assistants #code_interpreter #file_search #function_calling
