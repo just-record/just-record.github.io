@@ -446,3 +446,7 @@ if __name__ == '__main__':
 
 - 사용자가 보낸 메시지를 OpenAI API에 전달하여 이미지를 생성합니다.
 - 생성된 이미지의 URL을 사용자에게 전송합니다.
+
+---
+
+해시태그: #Telegram #ChatBot #API #openai #python #BotFather #Application #CommandHandler #MessageHandler #OpenAI-API
