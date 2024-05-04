@@ -108,7 +108,7 @@ response = client.chat.completions.create(
     temperature=0.7
 )
 
-print(response.to_dict())
+print(response.model_dump_json())
 ```
 
 ```python
@@ -199,7 +199,7 @@ response = client.chat.completions.create(
     temperature=0.7
 )
 
-print(response.to_dict())
+print(response.model_dump_json())
 ```
 
 **앞으로 모든 예제 코드는 `.env` 파일에 API 키를 저장했다고 가정하고 작성합니다.**

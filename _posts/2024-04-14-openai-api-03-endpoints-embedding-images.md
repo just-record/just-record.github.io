@@ -224,7 +224,7 @@ my_file = client.files.create(
   purpose="assistants" # 'fine-tune', 'assistants', 'batch', 'user_data', 'responses'
 )
 
-print(my_file.to_dict())
+print(my_file.model_dump_json())
 ```
 
 ### 파일 목록 (List Files)

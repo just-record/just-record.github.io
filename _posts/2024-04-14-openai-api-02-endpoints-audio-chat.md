@@ -209,7 +209,7 @@ transcript = client.audio.translations.create(
   file=audio_file
 )
 
-print(transcript.to_dict())
+print(transcript.model_dump_json())
 ```
 
 - `model`: 사용할 번역 모델(`whisper-1`)입니다.
@@ -308,7 +308,7 @@ completion = client.chat.completions.create(
   messages=[
     {"role": "system", "content": "You are a helpful assistant."},
     {"role": "user", "content": "Hello! My name is Hong Gildong."},
-    {"role": "system", "content": "Hello! How can I assist you today?"},
+    {"role": "assistant", "content": "Hello! How can I assist you today?"},
     {"role": "user", "content": "What is my name?."}
   ]
 )
@@ -405,7 +405,7 @@ completion = client.chat.completions.create(
   n=3
 )
 
-print(completion.usage.to_dict())
+print(completion.usage.model_dump_json())
 ```
 
 결과:
