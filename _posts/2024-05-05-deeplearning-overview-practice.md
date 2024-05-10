@@ -127,6 +127,8 @@ plt.show()
 
 ## 그림판을 이용 해서 숫자 이미지 그리기
 
+![그림판-숫자-이미지]({{site.url}}/images/deep-learning/test.png)
+
 그림판을 이용 하여 숫자를 직접 그리고 위의 모델로 인식을 하겠습니다. 학습한 이미지와 비슷한 형태를 그리기 위해 굵고 정가운데 화면에 꽉 차게 그리면 인식률이 높아집니다.
 
 - 그림판을 실행합니다.
@@ -179,7 +181,11 @@ CNN(Convolutional Neural Network, 합성곱 신경망)은 딥러닝의 한 종�
 
 고양이 찾는 예를 들겠습니다. CNN은 많은 필터를 가지고 있습니다. 어떤 필터는 고양이의 눈을 찾는 데 특화되어 있고, 어떤 필터는 고양이의 귀를 찾는 데 특화되어 있어요. 각 필터가 찾아낸 특징들을 모아서 최종적으로 "아하, 이 사진에는 고양이가 있구나!"라는 결론을 내리는 거죠.
 
-### CNN 모델 구현
+### CNN 시각화
+
+<https://transcranial.github.io/keras-js/#/mnist-cnn>
+
+### 1. CNN 모델 구현
 
 ```python
 import numpy as np
@@ -223,10 +229,21 @@ model.save('mnist_cnn_model.h5')
 print("Model saved to mnist_cnn_model.h5")
 ```
 
-### CNN 시각화
+### 2. 구현된 CNN 모델을 사용하여 손글씨 숫자 인식
 
-<https://transcranial.github.io/keras-js/#/mnist-cnn>
+- `손글씨 숫자 인식1` -> `3. 구현된 모델을 사용하여 손글씨 숫자 인식` -> 코드를 실행합니다.(모델명 변경 필요)
+- `model = load_model('mnist_cnn_model.h5')`
+
+### 3. CNN 모델을 사용하여 그림판으로 그린 숫자 이미지 인식
+
+- `그림판을 이용 해서 숫자 이미지 그리기`의 코드를 실행합니다.(모델명 변경 필요)
+- `model = load_model('mnist_cnn_model.h5')`
+
+## TODO
+
+- [ ] 객체인식 - YOLO
+- [ ] 자연어 처리 - 감정 분석
 
 ---
 
-해시태그: #딥러닝 #실습 #MNIST #CNN
+해시태그: #딥러닝 #실습 #MNIST #CNN #손글씨-숫자 #숫자-인식
