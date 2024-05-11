@@ -246,4 +246,4 @@ print("Model saved to mnist_cnn_model.h5")
 
 ---
 
-해시태그: #딥러닝 #실습 #MNIST #CNN #손글씨-숫자 #숫자-인식
+해시태그: #딥러닝 #실습 #MNIST #CNN #손글씨-숫자 #숫자-인식 #텐서플로우 #케라스 #파이토치
