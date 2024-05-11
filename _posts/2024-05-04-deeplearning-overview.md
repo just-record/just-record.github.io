@@ -310,13 +310,13 @@ for i in range(iterations):
 # 최종 모델 출력
 print(f"Final model: y = {w[0]}x + {b[0]}")
 
-new_x = np.rand(5, 1)  # 5개의 새로운 x 값
+new_x = np.random.rand(5, 1)  # 5개의 새로운 x 값
 actual_y = 2 * new_x + 1  # 실제 2x + 1 값 계산
 new_predictions = w[0] * new_x + b[0]
 
-print("New input x values:", new_x.numpy())
-print("Actual y values (2x + 1):", actual_y.numpy())
-print("Predicted y values:", new_predictions.numpy())
+print("New input x values:", new_x)
+print("Actual y values (2x + 1):", actual_y)
+print("Predicted y values:", new_predictions)
 
 ```
 

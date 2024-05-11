@@ -239,11 +239,122 @@ print("Model saved to mnist_cnn_model.h5")
 - `그림판을 이용 해서 숫자 이미지 그리기`의 코드를 실행합니다.(모델명 변경 필요)
 - `model = load_model('mnist_cnn_model.h5')`
 
-## TODO
+## 객체인식
 
-- [ ] 객체인식 - YOLO
-- [ ] 자연어 처리 - 감정 분석
+객체인식(Object Detection)은 이미지나 비디오에서 하나 이상의 객체를 식별하고, 그 위치를 정확히 표시하는 컴퓨터 비전 기술입니다.
+
+### YOLO
+
+YOLO (You Only Look Once)는 이미지 내에서 객체를 인식하는 딥러닝 알고리즘입니다. YOLO는 이름에서 알 수 있듯이 이미지를 단 한 번만 보고 (즉, 단일 신경망) 여러 객체의 종류와 위치를 신속하게 예측할 수 있습니다. 이 알고리즘은 속도와 정확도의 균형을 잘 맞추어 실시간 객체 인식 시스템에서 널리 사용되고 있습니다.
+
+### 공식 링크
+
+문서: <https://docs.ultralytics.com/ko>
+
+Quick Start: <https://docs.ultralytics.com/quickstart/>
+
+Github: <https://github.com/ultralytics/ultralytics>
+
+### 설치
+
+Python은 3.8, PyTorch는 1.8 이상 설치 되어 있어야 합니다.
+
+```bash
+pip install ultralytics
+pip install pillow
+pip install matplotlib
+```
+
+### 예측 - predict
+
+<https://docs.ultralytics.com/usage/python/>
+
+COCO 데이터 셋으로 사전 학습 된 모델로 `bus.jpg`의 객체를 인식합니다.
+
+![bus.jpg]({{site.url}}/images/deep-learning/bus.jpg)
+
+`bus.jpg` 이미지를 소스 코드가 있는 곳에 다운로드 받습니다.
+
+```python
+# pip install pillow
+
+from ultralytics import YOLO
+from PIL import Image
+import matplotlib.pyplot as plt
+
+# COCO 데이터 셋으로 사전 학습 된 모델이 다운로드 되고 로드 됨
+model = YOLO("yolov8n.pt")  
+
+# 대상 이미지를 로드
+im1 = Image.open("bus.jpg")
+# 예측 실행 - 결과는 이미지 파일로 저장됨
+results = model.predict(source=im1, save=True)  # save plotted images
+
+# 결과 출력 - List 형태
+print(results)
+
+# runs\\detect 하위의 predict 디렉토리를 모두 지울 것
+# 2번째 실행 하면 predict2, 3번째 실행하면 predict3으로 저장됨
+image = Image.open('runs/detect/predict/bus.jpg')
+
+plt.figure(figsize=(4, 4))  # 이미지 크기 설정
+plt.imshow(image)
+plt.colorbar()  # 색상 바 추가
+plt.axis('off')  # 축 끄기
+plt.show()
+```
+
+### 훈련 - train
+
+<https://docs.ultralytics.com/usage/python/>
+
+```python
+from ultralytics import YOLO
+
+# Load a pretrained YOLO model (recommended for training)
+# COCO 데이터 셋으로 사전 학습 된 모델이 다운로드 되고 로드 됨
+model = YOLO('yolov8n.pt')
+
+# Train the model using the 'coco8.yaml' dataset for 3 epochs
+# 훈련 데이터셋을 사용하여 모델을 3회 학습
+results = model.train(data='coco8.yaml', epochs=3)
+
+print(results)
+```
+
+- `yolov8n.pt` - COCO 데이터 셋으로 사전 학습 된 모델이 다운로드 됨
+- `dataset/coco8/images` - 훈련용/평가용 이미지 파일(train, val)
+- `dataset/coco8/labels` - 훈련용/평가용 레이블 파일(train, val)
+- `runs/detect/train/weight/best.pt` - 가장 좋은 가중치 파일
+- `runs/detect/train/` - 훈련 결과 이미지 및 csv 파일
+
+### 평가
+
+앞서 훈련한 모델을 평가합니다.
+
+```python
+from ultralytics import YOLO
+
+# COCO 데이터 셋으로 사전 학습 된 모델이 다운로드 되고 로드 됨
+model = YOLO("runs/detect/train/weights/best.pt")
+
+results = model.val()  # It'll automatically evaluate the data you trained.
+
+print(results)
+```
+
+- `runs/detect/val` - 평가 결과 이미지
+
+### 훈련된 모델로 예측
+
+모델을 로딩 할 때 훈련된 모델을 사용합니다. 나머지는 위의 예측과 동일합니다.
+
+```python
+# ...
+model = YOLO("runs/train/weights/best.pt")
+# ...
+```
 
 ---
 
-해시태그: #딥러닝 #실습 #MNIST #CNN #손글씨-숫자 #숫자-인식 #텐서플로우 #케라스 #파이토치
+해시태그: #딥러닝 #실습 #MNIST #CNN #손글씨-숫자 #숫자-인식 #텐서플로우 #케라스 #파이토치 #YOLO #객체인식 #훈련 #평가
