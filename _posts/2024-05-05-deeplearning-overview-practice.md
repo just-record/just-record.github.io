@@ -105,7 +105,7 @@ from tensorflow.keras.datasets import mnist
 x_test = x_test / 255.0
 
 # 저장된 모델 불러오기
-model = load_model('mnist_model.h5')
+model = load_model('mnist_model.keras')
 print("Model loaded from disk.")
 
 # 테스트 데이터셋에서 랜덤 이미지 선택
@@ -148,7 +148,7 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 
 # 저장된 모델 불러오기
-model = load_model('mnist_model.h5')
+model = load_model('mnist_model.keras')
 print("Model loaded from disk.")
 
 # 이미지 파일 로드
@@ -189,6 +189,7 @@ CNN(Convolutional Neural Network, 합성곱 신경망)은 딥러닝의 한 종�
 
 ```python
 import numpy as np
+import keras
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropout
@@ -225,19 +226,19 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 model.fit(x_train, y_train, epochs=10, batch_size=128, validation_split=0.1)
 
 # 모델 저장
-model.save('mnist_cnn_model.h5')
-print("Model saved to mnist_cnn_model.h5")
+keras.saving.save_model(model, 'mnist_cnn_model.keras')
+print("Model saved to mnist_cnn_model.keras")
 ```
 
 ### 2. 구현된 CNN 모델을 사용하여 손글씨 숫자 인식
 
 - `손글씨 숫자 인식1` -> `3. 구현된 모델을 사용하여 손글씨 숫자 인식` -> 코드를 실행합니다.(모델명 변경 필요)
-- `model = load_model('mnist_cnn_model.h5')`
+- `model = load_model('mnist_cnn_model.keras')`
 
 ### 3. CNN 모델을 사용하여 그림판으로 그린 숫자 이미지 인식
 
 - `그림판을 이용 해서 숫자 이미지 그리기`의 코드를 실행합니다.(모델명 변경 필요)
-- `model = load_model('mnist_cnn_model.h5')`
+- `model = load_model('mnist_cnn_model.keras')`
 
 ## 객체인식
 
