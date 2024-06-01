@@ -377,9 +377,9 @@ if __name__ == '__main__':
 
 ### 특정 기능 부여
 
-#### 방법1: System message 사용
+인공 지능이 특정 기능을 하여 답변하도록 만들어 보겠습니다. 사용자가 보낸 메시지를 영어로 번역하도록 하겠습니다.
 
-OpenAI Chat의 System content를 사용하여 인공 지능이 특정 기능을 하여 답변하도록 만들어 보겠습니다. 사용자가 보낸 메시지를 영어로 번역하도록 하겠습니다.
+#### 방법1: Message Handler 사용 - OpenAI의 System content 사용
 
 ```python
 from typing import List
@@ -405,7 +405,7 @@ if __name__ == '__main__':
 - 사용자가 보낸 메시지를 영어로 번역하라는 시스템 메시지를 추가하여 답변을 생성합니다.
 - 사용자가 보낸 메시지를 영어로 번역하여 답변합니다.
 
-#### 방법2: /translation 명령어 사용
+#### 방법2: Command Handler 사용 - /translation
 
 ```python
 # ...
@@ -442,6 +442,8 @@ if __name__ == '__main__':
 ### 이미지 생성
 
 OpenAI API를 사용하여 이미지를 생성하도록 만들어 보겠습니다. 사용자가 보낸 메시지의 요청대로 이미지를 생성하고 생성된 이미지의 URL을 사용자에게 전송합니다.
+
+#### 방법1: Message Handler 사용
 
 ```python
 # ...
@@ -483,12 +485,51 @@ async def generate_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     # ...
+    # `answer_handler`의 호출 함수를 `generate_image`로 변경
     answer_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), generate_image)
     # ...
 ```
 
 - 사용자가 보낸 메시지를 OpenAI API에 전달하여 이미지를 생성합니다.
 - 생성된 이미지의 URL을 사용자에게 전송합니다.
+
+#### 방법2: Command Handler 사용 - /generate_image
+
+```python
+
+# ...
+async def generate_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    args = context.args #/translation 명령어 뒤에 입력한 텍스트를 args에 저장
+    args_to_str = ' '.join(args) # args를 문자열로 변환
+
+    query = f'{args_to_str}'
+
+    client = OpenAI()
+
+    images = client.images.generate(
+        model="dall-e-3",
+        prompt=query,
+        n=1,
+        size="1024x1024"
+    )    
+
+    try:
+        answer = images.data[0].url
+    except Exception as e: # 예외 발생 시
+        print(f'Error: {e}')
+        answer = "죄송합니다. 인공지능이 답변을 생성하는 중에 오류가 발생했습니다."
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=answer
+    )      
+
+if __name__ == '__main__':
+    # ...
+    generate_image = CommandHandler('generation_image', generate_image)
+    # ...
+    application.add_handler(generate_image)
+```
 
 ---
 
