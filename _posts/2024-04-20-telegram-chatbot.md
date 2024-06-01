@@ -197,7 +197,7 @@ if __name__ == '__main__':
 
 ### 명령어 처리하기
 
-'ommand Handler'를 이용 하여 사용자의 명령어를 처리 합니다.
+'command Handler'를 이용 하여 사용자의 명령어를 처리 합니다.
 
 ```python
 # ...
@@ -233,6 +233,9 @@ if __name__ == '__main__':
 'MessageHandler를 사용하여 사용자의 메시지를 처리 합니다. 사용자의 메시지를 그대로 답변하는 함수를 만들어 보겠습니다.
 
 ```python
+# ...
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
+
 # ...
 # 사용자가 Message를 입력 했을 때 답변해주는 함수입니다.
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -329,13 +332,14 @@ def get_openai_chat_completion(client, model: str, messages: List ):
 # ...
 
 # 채팅 메시지에 답변을 보내는 함수
+# `async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):`를 대체 한다.
 async def answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # 사용자가 보낸 메시지를 query 변수에 저장
     query = update.message.text
     
     client = get_openai_client()  # OpenAI API 클라이언트 생성
-    model = "gpt-3.5-turbo-0613"  # 사용할 모델 이름
+    model = "gpt-4o"  # 사용할 모델 이름
     # 사용자가 보낸 메시지를 OpenAI API에 user 역할로 전달
     messages = [{"role": "user", "content": query}]
     # OpenAI API로 답변 생성
@@ -360,10 +364,11 @@ async def answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     # ...
-    # answer_handler를 생성
+    # `echo_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), echo)`를 대체 한다.
     answer_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), answer)
     
     # ...
+    # `application.add_handler(echo_handler)`를 대체 한다.
     application.add_handler(answer_handler)
     # ...
 ```
@@ -371,6 +376,8 @@ if __name__ == '__main__':
 - 사용자가 보낸 메시지를 OpenAI API에 전달하여 답변을 생성합니다.
 
 ### 특정 기능 부여
+
+#### 방법1: System message 사용
 
 OpenAI Chat의 System content를 사용하여 인공 지능이 특정 기능을 하여 답변하도록 만들어 보겠습니다. 사용자가 보낸 메시지를 영어로 번역하도록 하겠습니다.
 
@@ -395,6 +402,40 @@ if __name__ == '__main__':
 
 - 사용자가 보낸 메시지를 영어로 번역하라는 시스템 메시지를 추가하여 답변을 생성합니다.
 - 사용자가 보낸 메시지를 영어로 번역하여 답변합니다.
+
+#### 방법2: /translation 명령어 사용
+
+```python
+# ...
+async def translation(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    args = context.args #/translation 명령어 뒤에 입력한 텍스트를 args에 저장
+    args_to_str = ' '.join(args) # args를 문자열로 변환
+
+    query = f'{args_to_str}\n\n위의 문장을 영어로 번역해주세요.'
+
+    client = get_openai_client()  # OpenAI API 클라이언트 생성
+    model = "gpt-4o"  # 사용할 모델 이름
+    # 사용자가 보낸 메시지를 OpenAI API에 user 역할로 전달
+    messages = [{"role": "user", "content": query}]
+    # OpenAI API로 답변 생성
+    completion = get_openai_chat_completion(
+        client=client, 
+        model=model, 
+        messages=messages
+    )
+
+    try:
+        answer = completion.choices[0].message.content
+    except Exception as e: # 예외 발생 시
+        print(f'Error: {e}')
+        answer = "죄송합니다. 인공지능이 답변을 생성하는 중에 오류가 발생했습니다."
+# ...
+
+if __name__ == '__main__':
+    # ...
+    translation_handler = CommandHandler('translation', translation)
+    # ...
+```
 
 ### 이미지 생성
 
