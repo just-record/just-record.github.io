@@ -531,6 +531,56 @@ if __name__ == '__main__':
     application.add_handler(generate_image)
 ```
 
+### 이미지를 업로드하고 질의 하기
+
+채팅창에 이미지를 업로드하고 이미지 관련하여 질의하면 OpenAI API를 사용하여 답변하도록 만들어 보겠습니다.
+
+```python
+# ...
+async def image_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    caption = update.message.caption
+    query = caption if caption else '이미지를 설명해 주세요.'
+    photo = update.message.photo[-1]
+    photo_file = await photo.get_file()
+    # await photo_file.download_to_drive('received_image.jpg')
+    photo_file_dict = photo_file.to_dict()
+    uploaded_file_url = photo_file_dict['file_path']
+
+    client = OpenAI()
+
+    response = client.chat.completions.create(
+        model="gpt-4-turbo",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": query},
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": f"{uploaded_file_url}"},
+                    },
+                ],
+            }
+        ],
+        max_tokens=300,
+    )
+
+    answer = response.choices[0].message.content
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=answer
+    )  
+# ...
+
+if __name__ == '__main__':
+    # ...
+    image_query_handler = MessageHandler(filters.PHOTO, image_query)
+    # ...
+    application.add_handler(image_query_handler)
+    # ...
+```
+
 ---
 
 해시태그: #Telegram #ChatBot #API #openai #python #BotFather #Application #CommandHandler #MessageHandler #OpenAI-API
