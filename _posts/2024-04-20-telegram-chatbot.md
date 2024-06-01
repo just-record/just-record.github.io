@@ -549,7 +549,7 @@ async def image_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     client = OpenAI()
 
     response = client.chat.completions.create(
-        model="gpt-4-turbo",
+        model="gpt-4o",
         messages=[
             {
                 "role": "user",
