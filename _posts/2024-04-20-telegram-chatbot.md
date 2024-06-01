@@ -382,6 +382,8 @@ if __name__ == '__main__':
 OpenAI Chat의 System content를 사용하여 인공 지능이 특정 기능을 하여 답변하도록 만들어 보겠습니다. 사용자가 보낸 메시지를 영어로 번역하도록 하겠습니다.
 
 ```python
+from typing import List
+
 # ...
 # 시스템 메시지를 추가하는 함수
 def add_system_content(messages: List, system_message: str):
