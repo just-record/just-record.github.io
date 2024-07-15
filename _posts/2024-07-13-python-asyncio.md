@@ -883,4 +883,4 @@ All tasks: ['Task-1', 'Monitor']
 
 ---
 
-해시태그: #Python #비동기 #asyncio #코루틴(Coroutine) #async #await #이벤트루프(Event Loop) #Tasks #Futures#gather #create_task #예외처리 #디버깅
+해시태그: #Python #비동기 #asyncio #코루틴(Coroutine) #async #await #이벤트루프(Event Loop) #Tasks #Futures #gather #create_task #예외처리 #디버깅
