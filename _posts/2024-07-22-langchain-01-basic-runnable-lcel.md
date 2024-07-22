@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "LangChain - 01. 기본적인 방법으로 사용 하기" 
+title: "LangChain - 01. 기본 사용 - Runnable, LCEL" 
 categories: LangChain
 tag: [Python, LLM, LangChain]
 toc: true
