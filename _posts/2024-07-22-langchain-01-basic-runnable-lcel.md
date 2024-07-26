@@ -10,7 +10,7 @@ toc_label: "목차"
 
 ## LangChain 이란?
 
-LangChain은 대규모 언어 모델(LLM)을 활용한 애플리케이션 개발을 위한 프레임워크입니다. 사용해 가면서 익히는 것이 좋습니다.
+LangChain은 대규모 언어 모델(LLM)을 활용한 애플리케이션 개발을 위한 프레임워크입니다.
 
 [공식 문서](https://python.langchain.com/v0.2/docs/introduction/)
 
@@ -596,4 +596,4 @@ asyncio.run(main())
 
 ---
 
-해시태그: #Python #llm #LangChain #openai #anthropic #Runnable #LCEL
+해시태그: #LangChain #openai #anthropic #Runnable #LCEL #invoke #chain #RunnableLambda #RunnableParallel #RunnablePassthrough #config #with_config #bind #with_fallbacks #with_retry #ainvoke #stream #astream
