@@ -478,6 +478,122 @@ chain.invoke(5)
 - 오류 발생 시: runnable2가 대체 실행
 - `5 + "foo"`가 오류를 발생시켜 runnable2가 실행
 
+### with_retry - 작업이 실패할 때 재시도 하기
+
+```python
+from langchain_core.runnables import RunnableLambda
+
+
+counter = 0
+
+def func(x):
+    global counter
+    counter += 1
+    print(f"attempt with {counter=}")
+    # return x / counter
+    return x / 0
+
+
+## 1. stop_after_attempt에 의해 2번 재시도 하고 오류 발생
+chain = RunnableLambda(func).with_retry(stop_after_attempt=2)
+
+try:
+    print(chain.invoke(2))
+except Exception as e:
+    print(e)
+
+### 2. retry_if_exception_type를 사용 하여 Exception Type을 지정하여 재시도
+# 아래 코드는 ZeroDivisionError가 발생하는데 retry_if_exception_type에 해당 Exception이 없어서 재시도 하지 않음
+print('-' * 50)
+counter = 0
+chain = RunnableLambda(func).with_retry(retry_if_exception_type=(ValueError, ConnectionError), stop_after_attempt=2)
+
+try:
+    print(chain.invoke(2))
+except Exception as e:
+    print(e)    
+```
+
+```python
+# 결과
+attempt with counter=1
+attempt with counter=2
+division by zero   
+--------------------------------------------------
+attempt with counter=1
+division by zero
+```
+
+### 비동기 실행
+
+```python
+import asyncio
+from langchain_core.runnables import RunnableLambda
+
+async def main():
+    runnable = RunnableLambda(lambda x: str(x))
+    result = await runnable.ainvoke(5)
+    print(result)
+
+asyncio.run(main())
+```
+
+### stream - 스트림 처리하기
+
+```python
+from langchain_core.runnables import RunnableLambda
+import time
+
+
+def func(x):
+    for y in x:
+        print(f'y: {y}')
+        yield str(y)
+
+
+runnable = RunnableLambda(func)
+
+
+for chunk in runnable.stream(range(5)):
+    time.sleep(0.3)
+    print(chunk)
+```
+
+```python
+y: 0
+0
+y: 1
+1
+y: 2
+2
+y: 3
+3
+y: 4
+4
+```
+
+### 비동기 스트림 처리
+
+```python
+from langchain_core.runnables import RunnableLambda
+import asyncio
+
+async def func(x):
+    for y in x:
+        print(f'y: {y}')
+        yield str(y)
+
+runnable = RunnableLambda(func)
+
+async def main():
+    async for chunk in runnable.astream(range(5)):
+        await asyncio.sleep(0.3)
+        print(chunk)
+
+# 실행
+asyncio.run(main())
+```  
+
 ---
 
 해시태그: #Python #llm #LangChain #openai #anthropic #Runnable #LCEL
