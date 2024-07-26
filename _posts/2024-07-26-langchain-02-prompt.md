@@ -152,12 +152,12 @@ from langchain_core.prompts import PromptTemplate
 
 template = "Tell me a {adjective} joke about {topic}"
 
-### 방법 1
+### 방법 1 - from_template
 prompt = PromptTemplate.from_template(template)
 partial_prompt = prompt.partial(adjective="funny")
 print(partial_prompt.invoke({"topic": "cats"}))
 
-### 부분을 포매팅 하기(문자열) - 방법 2
+### 방법 2 - partial_variables
 print('-'*30)
 prompt = PromptTemplate(
     template=template, 
@@ -172,6 +172,45 @@ print(partial_prompt.invoke({"topic": "cats"}))
 text='Tell me a funny joke about cats'
 ------------------------------
 text='Tell me a funny joke about cats'
+```
+
+### 5. partial_variables - 함수와 함께 사용 하기
+
+```python
+from langchain_core.prompts import PromptTemplate
+from datetime import datetime
+
+
+def _get_datetime():
+    now = datetime.now()
+    return now.strftime("%m/%d/%Y, %H:%M:%S")
+
+
+### 방법 1 - from_template
+prompt = PromptTemplate(
+    template="Tell me a {adjective} joke about the day {date}",
+    input_variables=["adjective", "date"],
+)
+partial_prompt = prompt.partial(date=_get_datetime)
+print(partial_prompt.format(adjective="funny"))
+# Tell me a funny joke about the day 07/03/2024, 19:30:23
+
+### 방법 2 - partial_variables
+print("-" * 30)
+prompt = PromptTemplate(
+    template="Tell me a {adjective} joke about the day {date}",
+    input_variables=["adjective"],
+    partial_variables={"date": _get_datetime},
+)
+print(prompt.format(adjective="funny"))
+# Tell me a funny joke about the day 07/03/2024, 19:30:23
+```
+
+```python
+# 결과
+Tell me a funny joke about the day 07/03/2024, 19:30:23
+------------------------------
+Tell me a funny joke about the day 07/03/2024, 19:30:23
 ```
 
 ## ChatPromptTemplate 란?
@@ -338,6 +377,13 @@ messages=[SystemMessage(content='You are a helpful assistant'), HumanMessage(con
 messages=[SystemMessage(content='You are a helpful assistant'), HumanMessage(content='hi!')]
 messages=[SystemMessage(content='You are a helpful assistant'), HumanMessage(content='hi!'), AIMessage(content='Hello! How can I assist you today?!')]false
 ```
+
+## TODO
+
+- [ ] Selector
+- [ ] PipelinePromptTemplate
+- [ ] File의 PromptTemplates
+- [ ] LangChain hub의 PromptTemplates
 
 ---
 
