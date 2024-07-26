@@ -344,6 +344,140 @@ chain.invoke({"foo": 10})
   - '{"foo": 10}'이 입력이 되어 'x["foo"]'은 10이 되고 10 + 7 = 17이 되어 'bar' 키의 값으로 설정
 - '{"foo": 10}'는 유지 되고 새로운 키-값이 추가 되므로 최종 결과: {'foo': 10, 'bar': 17}
 
+### config - Runnable 실행 시에 동적으로 매개변수 설정하기
+
+- config: Runnable 객체의 실행 방식을 세부적으로 조정. 다양한 실행 매개변수를 동적으로 설정
+- config의 인자는 Runnable 객체의 타입에 따라 다름. 각 Runnable 타입은 자신만의 특정 config 옵션을 가짐
+
+```python
+from langchain_core.runnables import RunnableLambda, RunnableParallel
+import time
+
+def function1(x):
+    print("function1 is running")
+    time.sleep(1)
+    return {"foo": x}
+
+def function2(x):
+    print("function2 is running")
+    time.sleep(1)
+    return [x] * 2
+
+def function3(x):
+    print("function3 is running")
+    time.sleep(1)
+    return str(x)
+
+runnable1 = RunnableLambda(function1)
+runnable2 = RunnableLambda(function2)
+runnable3 = RunnableLambda(function3)
+
+chain = RunnableParallel(first=runnable1, second=runnable2, third=runnable3)
+
+print(chain.invoke(7, config={"max_concurrency": 2}))
+```
+
+```python
+# 결과
+function1 is running
+function2 is running
+function3 is running
+{'first': {'foo': 7}, 'second': [7, 7], 'third': '7'}
+```
+
+- max_concurrency: 병렬로 실행할 최대 작업 수: runnable1, runnable2, runnable3 중 2개의 작업이 병렬로 실행 된 후 나머지 1개의 작업이 실행됩니다.
+
+### with_config - Runnable 에 설정된 config를 저장 하기
+
+config로 설정 된 Runnable을 새로운 chain에 저장 할 수도 있음
+
+```python
+# ... 위의 코드와 동일
+
+chain = RunnableParallel(first=runnable1, second=runnable2, third=runnable3)
+### 1. with_config()
+print(chain.with_config(max_concurrency=2).invoke(7))
+# {'first': {'foo': 7}, 'second': [7, 7], 'third': '7'}
+
+
+### 2. 새로운 chain으로 저장 가능
+print('-'*30)
+configured_chain = chain.with_config(max_concurrency=2)
+print(configured_chain.invoke(7))
+# {'first': {'foo': 7}, 'second': [7, 7], 'third': '7'}
+```
+
+```python
+# 결과
+function1 is running
+function2 is running
+function3 is running
+{'first': {'foo': 7}, 'second': [7, 7], 'third': '7'}
+```
+
+### bind - Runnable의 입력 매개변수를 고정 하기
+
+- bind 메서드: Runnable 객체의 입력 매개변수를 고정하는 데 사용
+- Python의 내장 functools.partial나 클로저와 유사한 느낌
+
+```python
+from typing import Optional
+
+from langchain_core.runnables import RunnableLambda
+
+
+def func(main_arg: dict, other_arg: Optional[str] = None) -> dict:
+    if other_arg:
+        return {**main_arg, **{"foo": other_arg}}
+    return main_arg
+
+
+runnable1 = RunnableLambda(func)
+bound_runnable1 = runnable1.bind(other_arg="bye")
+
+bound_runnable1.invoke({"bar": "hello"})
+```
+
+```python
+# 결과
+{'bar': 'hello', 'foo': 'bye'}
+```
+
+#### with_config와 bind의 차이
+
+|구분|with_config|bind|
+|---|---|---|
+|용도|실행 환경 설정 (예: 병렬 처리, 메모리 사용량 등)|함수 인자의 부분 적용|
+|유연성|실행 시점에 쉽게 변경 가능합니다.|한번 바인딩된 인자는 고정되며, 실행 시점에 변경하기 어려움|
+|적용 범위|주로 체인 전체나 복잡한 Runnable 객체에 적용|개별 함수나 간단한 Runnable 객체에 주로 사용|
+|반환 값|원본 객체의 설정이 변경된 새로운 복사본을 반환|부분적으로 적용된 새로운 함수(또는 Runnable)를 반환|
+
+with_config는 실행 환경을 조정하는 데 사용되고, bind는 함수의 인자를 부분적으로 적용하는 데 사용됩니다. 두 메서드 모두 원본 객체를 변경하지 않고 새로운 객체를 반환한다는 점에서 비슷하지만, 그 목적과 사용 방식에서 차이가 있습니다.
+
+예를 들어 위의 코드에서 'configured_chain = chain.with_config(max_concurrency=2)'를 'configured_chain = chain.bind(max_concurrency=2)' 로, with_config 대신 bind를 사용 하면 오류가 발생 합니다. 'max_concurrency'는 실행 설정의 일부로, 함수의 입력 매개변수가 아닙니다. 이는 RunnableParallel의 동작 방식을 제어하는 설정입니다
+
+### with_fallbacks - 오류 발생 시 대체 Runnable 지정 하기
+
+```python
+from langchain_core.runnables import RunnableLambda
+
+runnable1 = RunnableLambda(lambda x: x + "foo")
+runnable2 = RunnableLambda(lambda x: str(x) + "foo")
+
+chain = runnable1.with_fallbacks([runnable2])
+
+chain.invoke(5)
+```
+
+```python
+# 결과
+'5foo'
+```
+
+- 정상적인 경우: runnable1이 성공적으로 실행
+- 오류 발생 시: runnable2가 대체 실행
+- `5 + "foo"`가 오류를 발생시켜 runnable2가 실행
+
 ---
 
 해시태그: #Python #llm #LangChain #openai #anthropic #Runnable #LCEL
