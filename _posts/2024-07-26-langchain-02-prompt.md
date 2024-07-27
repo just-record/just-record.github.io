@@ -378,7 +378,9 @@ messages=[SystemMessage(content='You are a helpful assistant'), HumanMessage(con
 messages=[SystemMessage(content='You are a helpful assistant'), HumanMessage(content='hi!'), AIMessage(content='Hello! How can I assist you today?!')]false
 ```
 
-## FewShotPromptTemplate
+## Few Shot과 Example Selector
+
+### FewShotPromptTemplate
 
 'FewShotPromptTemplate'은 Few-shot 학습을 위한 프롬프트 템플릿을 생성한다.
 
@@ -512,7 +514,7 @@ print(
 # Question: Who was the father of Mary Ball Washington?
 ```
 
-## SemanticSimilarityExampleSelector
+### SemanticSimilarityExampleSelector
 
 'SemanticSimilarityExampleSelector'는 주어진 입력과 가장 유사한 예제(Few shot을 위한 example set 중에서)를 선택한다. 가장 유사한 예제를 선택하기 위해 임베딩 벡터를 사용한다. 임베딩 벡터는 openai의 'OpenAIEmbeddings'를 사용하므로 openai의 API 키가 필요하다. 또한, 임베딩 벡터를 저장하고 유사성을 측정하기 위해 'Chroma'를 사용한다.
 
@@ -592,7 +594,7 @@ So the final answer is: Joseph Ball
 Question: Who was the father of Mary Ball Washington?
 ```
 
-## FewShotChatMessagePromptTemplate
+### FewShotChatMessagePromptTemplate
 
 'FewShotChatMessagePromptTemplate'은 대화형 AI 모델을 위한 Few-shot 프롬프트 템플릿을 생성한다.
 
@@ -657,7 +659,7 @@ he expression "2 🦜 9" is not a standard mathematical operation or equation. I
 11
 ```
 
-## SemanticSimilarityExampleSelector과 FewShotChatMessagePromptTemplate
+### SemanticSimilarityExampleSelector과 FewShotChatMessagePromptTemplate
 
 ```python
 from dotenv import load_dotenv
