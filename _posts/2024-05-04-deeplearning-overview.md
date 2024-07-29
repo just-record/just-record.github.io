@@ -106,7 +106,7 @@ toc_label: "목차"
 - 에이전트의 목표는 장기적인 관점에서 누적 보상을 최대화하는 최적의 정책(Policy)을 학습하는 것입니다.
 - 강화 학습은 게임 AI, 로봇 제어, 자율 주행 등의 분야에서 활용됩니다.
 - 알파고(AlphaGo)와 같은 바둑 AI가 강화 학습의 대표적인 예시입니다.
-- <https://www.youtube.com/watch?v=Zqwwhkv1YfM>
+- <https://www.youtube.com/watch?v=q3dN900QOtk>
 
 ## 인공신경망 (Artificial Neural Network)
 
