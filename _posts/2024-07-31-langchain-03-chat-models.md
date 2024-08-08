@@ -52,7 +52,7 @@ LangChain은 대규모 언어 모델(LLM)을 활용한 애플리케이션 개발
 
 ## Chat models 예시
 
-### 통합 패키지 - langchain-openai
+### langchain-openai
 
 ```python
 from dotenv import load_dotenv
@@ -76,7 +76,7 @@ print(result.content)
 # Korea is divided into two countries: South Korea and North Korea. The capital of South Korea is Seoul, while the capital of North Korea is Pyongyang.
 ```
 
-### 통합 패키지 - langchain-anthropic
+### langchain-anthropic
 
 ```python
 from dotenv import load_dotenv
@@ -103,10 +103,10 @@ print(result.content)
 # When people ask about "Korea" without specifying North or South, they are often referring to South Korea. In this case, the capital would be Seoul, which is also the largest city in South Korea and one of the largest metropolitan areas in the world.
 ```
 
-### langchain-anthropic
+### TODO
 
-TODO - 최신 버전으로 업데이트 필요
+다른 기능들을 먼저 살펴 보기
 
 ---
 
-해시태그: #LangChain #PromptTemplates #ChatPromptTemplate #from_messages #input_variables #partial_variables #MessagesPlaceholder #SystemMessage #HumanMessage #AIMessage #FewShotPromptTemplate #SemanticSimilarityExampleSelector #FewShotChatMessagePromptTemplate #PipelinePromptTemplate #LangSmith_hub
+해시태그: #LangChain #ChatModels #langchain-openai #langchain-anthropic #ChatOpenAI #ChatAnthropic #ChatModel
