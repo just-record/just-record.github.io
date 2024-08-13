@@ -14,13 +14,13 @@ toc_label: "목차"
 
 ollama는 대규모 언어 모델(Large Language Models, LLMs)을 로컬 환경에서 쉽게 실행할 수 있게 해주는 오픈소스 프레임워크입니다. 이 도구는 복잡한 AI 모델을 개인용 컴퓨터나 서버에서 간편하게 구동할 수 있도록 설계되었습니다.
 
-✅ 주요 목적
+✔️ 주요 목적
 
 - LLMs의 접근성 향상
 - 로컬 환경에서의 AI 모델 실행 간소화
 - 다양한 AI 모델의 쉬운 관리 및 사용
 
-✅ ollama의 특징과 장점
+✔️ ollama의 특징과 장점
 
 - 로컬 실행
   - 인터넷 연결 없이 모델 사용 가능
@@ -60,7 +60,7 @@ ollama는 대규모 언어 모델(Large Language Models, LLMs)을 로컬 환경�
 
 <https://ollama.com/download>
 
-✅ Linux (Ubuntu 22.04 LTS)
+✔️ Linux (Ubuntu 22.04 LTS)
 
 ```bash
 # Update package list and upgrade existing packages
@@ -79,7 +79,7 @@ ollama --version
 
 ## 서비스 시작 및 모델 다운로드, 실행
 
-✅ 서비스 시작
+✔️ 서비스 시작
 
 ```bash
 ollama serve
@@ -97,7 +97,7 @@ sudo ss -lptn 'sport = :11434'
 # reboot 을 해도 자동으로 실행되는 것 같다.
 ```
 
-✅ 모델 다운로드
+✔️ 모델 다운로드
 
 ```bash
 ollama pull llama3.1
@@ -117,7 +117,7 @@ ollama pull llama3.1
 
 모델을 다운로드 하지 않고 바로 실행 하면 다운로드 후에 실행 된다.
 
-✅ 모델 실행
+✔️ 모델 실행
 
 ```bash
 ollama run llama3.1
@@ -141,7 +141,7 @@ Nice to meet you, 홍길동님!
  내 이름은 나로군요! (I'm just a computer program, I don't have a real name)
 ```
 
-✅ 모델 실행 종료
+✔️ 모델 실행 종료
   
 ```bash
 >>> /bye
@@ -226,4 +226,4 @@ Your name is KimHun. 😊  I remembered that from when you introduced yourself! 
 
 ---
 
-해시태그: #Ollama #
+해시태그: #Ollama #설치 #기본사용 #모델다운로드 #모델실행 #명령어 #대화형모드
