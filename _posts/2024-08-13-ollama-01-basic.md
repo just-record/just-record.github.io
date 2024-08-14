@@ -77,6 +77,21 @@ ollama --version
 # ollama version is 0.3.5
 ```
 
+✔️ ollama 업그레이드
+
+이 문서를 작성 하는 중에 ollama가 업그레이드 되었습니다. 업그레이드 하는 방법을 알아 보았습니다.
+
+<https://github.com/ollama/ollama/blob/main/docs/faq.md>
+
+설치와 동일한 명령어를 사용 하면 됩니다.
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+# 설치 후 버전 확인
+ollama --version
+# ollama version is 0.3.6 => 0.3.5 에서 0.3.6으로 업그레이드 되었습니다.
+```
+
 ## 서비스 시작 및 모델 다운로드, 실행
 
 ✔️ 서비스 시작
@@ -224,6 +239,158 @@ What can I do for you? 😄  Do you have any questions I can answer or tasks I c
 Your name is KimHun. 😊  I remembered that from when you introduced yourself!  Is there anything else I can help you with?  </p>
 ```
 
+## API 사용
+
+ollama는 HTTP를 통해 접근할 수 있는 RESTful API를 제공합니다. 기본적으로 API 서버는 <http://localhost:11434>에서 실행됩니다.
+
+✔️ 주요 API 엔드포인트
+
+- 생성 (Generate): POST /api/generate - 텍스트 생성을 위한 엔드포인트
+- 채팅 (Chat): POST /api/chat - 대화형 응답을 위한 엔드포인트
+- 임베딩 (Embeddings): POST /api/embeddings - 텍스트의 벡터 표현을 생성하는 엔드포인트
+- 모델 목록 (List Models): GET /api/tags - 사용 가능한 모델 목록을 반환
+- 모델 생성 (Create Model): POST /api/create - 새로운 모델을 생성하거나 기존 모델을 수정
+- 모델 삭제 (Delete Model): DELETE /api/delete - 모델 삭제
+
+### `curl` 사용
+
+> 텍스트 생성
+
+```bash
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.1",
+  "prompt": "Why is the sky blue?"
+}'
+```
+
+```json
+{"model":"llama3.1","created_at":"2024-08-14T08:51:16.105202552Z","response":"The","done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:51:16.105206718Z","response":" sky","done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:51:16.10526969Z","response":" appears","done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:51:16.105271607Z","response":" blue","done":false}
+...
+```
+
+> 채팅
+
+```bash
+curl http://localhost:11434/api/chat -d '{
+  "model": "llama3.1",
+  "messages": [
+    { "role": "user", "content": "Hello, how are you?" }
+  ]
+}'
+```
+
+```json
+{"model":"llama3.1","created_at":"2024-08-14T08:52:47.185224768Z","message":{"role":"assistant","content":"I"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:52:47.185229236Z","message":{"role":"assistant","content":"'m"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:52:47.185306075Z","message":{"role":"assistant","content":" just"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:52:47.186735033Z","message":{"role":"assistant","content":" a"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:52:47.194470254Z","message":{"role":"assistant","content":" language"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T08:52:47.20219522Z","message":{"role":"assistant","content":" model"},"done":false}
+...
+```
+
+> 임베딩
+
+```bash
+curl http://localhost:11434/api/embeddings -d '{
+  "model": "llama3.1",
+  "prompt": "Hello world"
+}'
+```
+
+```json
+{"embedding":[-1.0290963649749756,-2.656991958618164,0.6437098383903503,-0.1601492166519165,2.6510043144226074,...]}
+```
+
+> 모델 목록 조회
+
+```bash
+curl http://localhost:11434/api/tags
+```
+
+```json
+{"models":[{"name":"llama3.1:70b","model":"llama3.1:70b",...}}]}
+```
+
+### `Python` 사용
+
+```python
+import requests
+import json
+
+def generate_text(prompt, model="llama3.1"):
+    url = "http://localhost:11434/api/generate"
+    data = {
+        "model": model,
+        "prompt": prompt
+    }
+    response = requests.post(url, json=data)
+    return response.text
+
+def chat(messages, model="llama3.1"):
+    url = "http://localhost:11434/api/chat"
+    data = {
+        "model": model,
+        "messages": messages
+    }
+    response = requests.post(url, json=data)
+    return response.text
+
+def embedding(messages, model="llama3.1"):
+    url = "http://localhost:11434/api/embeddings"
+    data = {
+        "model": model,
+        "messages": messages
+    }
+    response = requests.post(url, json=data)
+    return response.text
+
+def get_models():
+    url = "http://localhost:11434/api/tags"
+    response = requests.get(url)
+    return response.text
+
+### 텍스트 생성
+print(generate_text("Why is the sky blue?"))
+
+### 채팅
+print('-'*30)
+chat_messages = [
+    {"role": "user", "content": "Hello, how are you?"}
+]
+print(chat(chat_messages))
+
+### 임베딩
+print('-'*30)
+print(embedding("Hello world"))
+
+### 모델 목록 조회
+print('-'*30)
+print(get_models())
+```
+
+```python
+# 결과
+{"model":"llama3.1","created_at":"2024-08-14T09:06:05.569219117Z","response":"The","done":false}
+{"model":"llama3.1","created_at":"2024-08-14T09:06:05.569221959Z","response":" sky","done":false}
+{"model":"llama3.1","created_at":"2024-08-14T09:06:05.569285853Z","response":" appears","done":false}
+{"model":"llama3.1","created_at":"2024-08-14T09:06:05.569286898Z","response":" blue","done":false}
+...
+------------------------------
+{"model":"llama3.1","created_at":"2024-08-14T09:06:08.581256307Z","message":{"role":"assistant","content":"I"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T09:06:08.581263539Z","message":{"role":"assistant","content":"'m"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T09:06:08.581331748Z","message":{"role":"assistant","content":" doing"},"done":false}
+{"model":"llama3.1","created_at":"2024-08-14T09:06:08.581333592Z","message":{"role":"assistant","content":" well"},"done":false}
+...
+------------------------------
+{"embedding":[-1.0290963649749756,-2.656991958618164,0.6437098383903503,...]}
+------------------------------
+{"models":[{"name":"llama3.1:70b","model":"llama3.1:70b",...}]}
+```
+
 ---
 
-해시태그: #Ollama #설치 #기본사용 #모델다운로드 #모델실행 #명령어 #대화형모드
+해시태그: #Ollama #설치 #기본사용 #API사용 #텍스트생성 #채팅 #임베딩 #모델목록조회 #API #curl #Python
