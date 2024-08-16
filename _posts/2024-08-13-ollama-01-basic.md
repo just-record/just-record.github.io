@@ -398,12 +398,13 @@ print(get_models())
 ```python
 # 설치
 pip install -U langchain
-pip install -U langchain-ollama
+pip install -U langchain-community
 ```
 
 ```python
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_ollama.llms import OllamaLLM
+from langchain_community.chat_models import ChatOllama
+
 
 template = """Question: {question}
 
@@ -411,7 +412,7 @@ Answer: Let's think step by step."""
 
 prompt = ChatPromptTemplate.from_template(template)
 
-model = OllamaLLM(model="llama3.1")
+model = ChatOllama(model="llama3.1")
 
 chain = prompt | model
 
@@ -419,7 +420,7 @@ response = chain.invoke({"question": "What is LangChain?"})
 print(response)
 ```
 
-## 외부에서 API 사용
+## 원격으로 API 요청
 
 ollama가 설치 되지 않은 다른 서버에서 ollama API를 호출 하는 경우가 있다. 이 때 외부 서버에서 ollama에 접근 가능하도록 설정 해야 한다.
 
@@ -467,12 +468,37 @@ import requests
 
 def get_models():
     # url = "http://localhost:11434/api/tags"
-    url = "http://도메인:외부포트/api/tags"
+    url = "http://도메인주소:외부포트/api/tags"
     response = requests.get(url)
     return response.text
 
 
 print(get_models())
+```
+
+### LanaChain에서  원격으로 API 요청
+
+ollama가 설치 되지 않은 서버에서 LanaChain을 사용하여 원격의 ollama API를 호출 하기.
+
+```python
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_community.chat_models import ChatOllama
+
+
+template = """Question: {question}
+
+Answer: Let's think step by step."""
+
+prompt = ChatPromptTemplate.from_template(template)
+
+model = ChatOllama(
+    model="llama3.1",
+    base_url="http://도메인주소:외부포트")
+
+chain = prompt | model
+
+response = chain.invoke({"question": "What is LangChain?"})
+print(response)
 ```
 
 ---
