@@ -391,6 +391,90 @@ print(get_models())
 {"models":[{"name":"llama3.1:70b","model":"llama3.1:70b",...}]}
 ```
 
+### LanaChain 사용
+
+<https://python.langchain.com/v0.2/docs/integrations/llms/ollama/>
+
+```python
+# 설치
+pip install -U langchain
+pip install -U langchain-ollama
+```
+
+```python
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_ollama.llms import OllamaLLM
+
+template = """Question: {question}
+
+Answer: Let's think step by step."""
+
+prompt = ChatPromptTemplate.from_template(template)
+
+model = OllamaLLM(model="llama3.1")
+
+chain = prompt | model
+
+response = chain.invoke({"question": "What is LangChain?"})
+print(response)
+```
+
+## 외부에서 API 사용
+
+ollama가 설치 되지 않은 다른 서버에서 ollama API를 호출 하는 경우가 있다. 이 때 외부 서버에서 ollama에 접근 가능하도록 설정 해야 한다.
+
+✔️ ubuntu 22.04 LTS
+
+먼저 `11434` 포트는 외부에서 접근 가능하도록 방화벽을 열기
+
+```bash
+sudo ufw allow 11434
+# 확인
+sudo ufw status
+```
+
+외부에서 ollama에 접근 가능하도록 설정
+
+```bash
+### `systemd`로 서비스 설정 오버라이드
+sudo mkdir -p /etc/systemd/system/ollama.service.d
+### 시스템 서비스의 설정을 재정의하거나 확장하기 위해 environment.conf 파일을 생성
+echo '[Service]' | sudo tee -a /etc/systemd/system/ollama.service.d/environment.conf
+### 환경 변수 추가
+echo 'Environment="OLLAMA_HOST=0.0.0.0:11434"' | sudo tee -a /etc/systemd/system/ollama.service.d/environment.conf
+### CORS 설정을 통해 모든 도메인에서 접근을 허용
+# echo 'Environment="OLLAMA_ORIGINS=*"' | sudo tee -a /etc/systemd/system/ollama.service.d/environment.conf
+```
+
+Systemd 데몬 재로드 및 서비스 재시작
+  
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart ollama
+```
+
+모델 실행
+
+```bash
+ollama run llama3.1
+```
+
+외부 접근 확인
+
+```python
+import requests
+
+
+def get_models():
+    # url = "http://localhost:11434/api/tags"
+    url = "http://도메인:외부포트/api/tags"
+    response = requests.get(url)
+    return response.text
+
+
+print(get_models())
+```
+
 ---
 
-해시태그: #Ollama #설치 #기본사용 #API사용 #텍스트생성 #채팅 #임베딩 #모델목록조회 #API #curl #Python
+해시태그: #Ollama #설치 #기본사용 #API사용 #텍스트생성 #채팅 #임베딩 #모델목록조회 #curl #Python #LanaChain #외부API사용
