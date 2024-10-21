@@ -10,7 +10,7 @@ toc_label: "목차"
 
 ## vLLM - 생각나는 대로 연습해 보기
 
-pass
+기본 사용을 시작으로 하여 생각나는 대로 연습해 보았습니다.
 
 ## 기본 사용
 
@@ -425,7 +425,7 @@ python api_client.py
 
 ```
 
-### FastAPI와 통합 - sh2orc/llama-3-korean-8b
+## FastAPI와 통합 - sh2orc/llama-3-korean-8b
 
 `app.py`
 
@@ -541,4 +541,4 @@ python api_client.py
 
 ---
 
-해시태그: #vLLM #기본사용 #배치사용 #한국어사용 #meta-llama/Llama-3.1-8B-Instruct #sh2orc/llama-3-korean-8b #FastAPI #API서버 #API호출
+해시태그: #vLLM #기본사용 #배치사용 #한국어사용 #meta-llama/Llama-3.1-8B-Instruct #sh2orc/llama-3-korean-8b #FastAPI통합 #API서버 #API호출
