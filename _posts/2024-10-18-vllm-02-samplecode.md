@@ -541,4 +541,4 @@ python api_client.py
 
 ---
 
-해시태그: #vLLM #기본사용 #배치사용 #한국어사용 #meta-llama/Llama-3.1-8B-Instruct #sh2orc/llama-3-korean-8b #FastAPI통합 #API서버 #API호출
+해시태그: #vLLM #기본사용 #배치사용 #한국어사용 #채팅사용 #FastAPI통합 #API서버 #API호출
