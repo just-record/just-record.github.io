@@ -323,10 +323,6 @@ import uvicorn
 
 app = FastAPI()
 
-# Initialize the model
-# BASE_MODEL = "sh2orc/llama-3-korean-8b"
-# llm = LLM(model=BASE_MODEL)
-
 BASE_MODEL = "meta-llama/Llama-3.1-8B-Instruct"
 llm = LLM(
     model="meta-llama/Llama-3.1-8B-Instruct", 
