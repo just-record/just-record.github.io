@@ -266,6 +266,62 @@ Packing Tips:
 Enjoy your trip!
 ```
 
+## 그 외 공식 문서 링크
+
+✔️ Actions 라이브러리
+
+<https://platform.openai.com/docs/actions/actions-library>
+
+- 목적
+- 시작하기
+- 사용법
+- 제3자 Actions 쿡북
+- 미들웨어 Actions 쿡북
+- 피드백 제공
+- 라이브러리에 기여
+- 면책사항
+
+✔️ GPT Action 인증
+
+<https://platform.openai.com/docs/actions/authentication>
+
+- 인증없음
+- API 키 인증
+- OAuth 인증
+
+✔️ GPT Actions 제작 노트
+
+<https://platform.openai.com/docs/actions/production>
+
+- Rate 제한
+- 타임아웃
+- TLS와 HTTPS 사용
+- IP 송신 범위
+- 다중 인증 스키마
+- OpenAPI 사양 제한
+- 추가 제한 사항
+- 중요 작업 플래그
+- 예시 작성 모범 사례
+
+✔️ GPT Actions를 이용한 데이터 검색
+
+<https://platform.openai.com/docs/actions/data-retrieval>
+
+- API를 사용한 데이터 검색
+- 관계형 데이터베이스를 사용한 데이터 검색
+- 벡터 데이터베이스를 사용한 데이터 검색
+
+✔️ GPT Actions를 통한 파일 전송 및 반환
+
+<https://platform.openai.com/docs/actions/sending-files>
+
+- 파일 전송
+- 파일 반환
+
+✔️ 사용 정책
+
+<https://openai.com/policies/usage-policies/>
+
 ---
 
-해시태그: #OpenAI #GPTs #GPT Action #API #Weather.gov #Open API 스키마 #Action authentication
+해시태그: #OpenAI #GPTs #GPT Action #API #Weather.gov #Open API 스키마
