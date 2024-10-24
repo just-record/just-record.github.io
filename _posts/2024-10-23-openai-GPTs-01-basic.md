@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "OpenAI GPTs - 01. Basic"
+title: "OpenAI GPTs - 01. GPT Action"
 categories: GPTs
 tag: [OpenAI, GPTs, Action]
 toc: true
