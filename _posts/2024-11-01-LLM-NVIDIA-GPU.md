@@ -8,15 +8,13 @@ toc_sticky: true
 toc_label: "목차"
 ---
 
-LLM은 NVIDIA의 GPU를 많이 사용합니다.
-
-✔️NVIDIA GPU를 많이 사용 하는 이유
+✔️인공지능 학습과 추론에 NVIDIA GPU를 많이 사용 하는 이유
 
 - NVIDIA가 병렬 컴퓨팅 플랫폼인 CUDA를 개발 - AI 가속에 대한 조기 투자
 - 대부분의 AI/ML 프레임워크(TensorFlow, PyTorch)가 CUDA에 최적화됨 - 소프트웨어 생태계
 - 독적에 가까운 시장 점유율
 
-## NVIDIA의 대표적인 GPU - LLM
+## NVIDIA의 대표적인 GPU
 
 - RTX 3090
 - RTX 4090
@@ -27,11 +25,12 @@ LLM은 NVIDIA의 GPU를 많이 사용합니다.
 
 ## 특징 비교
 
+하드웨어 사양 보다 AI 학습에 관련된 특징을 중심으로 비교
+
 | 특징 | RTX 3090 | RTX 4090 | RTX A5000 | RTX A6000 | A100 | H100 |
 |------|----------|----------|------------|------------|------|------|
 | **메모리** | 24GB GDDR6X | 24GB GDDR6X | 24GB GDDR6 | 48GB GDDR6 | 40GB HBM2 / 80GB HBM2e | 80GB HBM3 |
 | **FP32 성능** | 35.6 TFLOPS | 82.6 TFLOPS | 27.8 TFLOPS | 38.7 TFLOPS | 19.5 TFLOPS | 51 TFLOPS |
-| **소비전력(TDP)** | 350W | 450W | 230W | 300W | 400W | 700W |
 | **데스크탑 설치** | 가능 | 가능 | 가능 | 가능 | 불가능(서버용) | 불가능(서버용) |
 | **멀티 GPU** | NVLink 지원 | 지원안함 | NVLink 지원 | NVLink 지원 | NVLink 지원 | NVLink 지원 |
 | **주요 용도** | 게이밍/렌더링 | 게이밍/렌더링 | 전문가용 워크스테이션 | 전문가용 워크스테이션 | AI 학습/추론 | AI 학습/추론 |
