@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "LLM - NVIDIA GPU 종류"
+title: "NVIDIA GPU 종류"
 categories: GPU
-tag: [OpenAI, NVIDIA, GPU]
+tag: [NVIDIA, GPU]
 toc: true
 toc_sticky: true
 toc_label: "목차"
